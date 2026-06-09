@@ -12,7 +12,7 @@ export default function Mannequin() {
 
   // Caminho direto (NUNCA quebra no build)
   const imageSrc = `/mannequin_formatos/${formato}.jpg`;
-
+  
   return (
     <div className='boneco'>
       <img
@@ -32,7 +32,7 @@ export default function Mannequin() {
           Ajuste somente se for necessário.
         </h3>
 
-        <label htmlFor='busto'>Busto: {busto}</label>
+        <label htmlFor='busto'>Busto</label>
         <input
           type='range'
           id='busto'
@@ -42,7 +42,7 @@ export default function Mannequin() {
           onChange={(e) => setBusto(Number(e.target.value))}
         />
 
-        <label htmlFor='cintura'>Cintura: {cintura}</label>
+        <label htmlFor='cintura'>Cintura</label>
         <input
           type='range'
           id='cintura'
@@ -52,7 +52,7 @@ export default function Mannequin() {
           onChange={(e) => setCintura(Number(e.target.value))}
         />
 
-        <label htmlFor='quadril'>Quadril: {quadril}</label>
+        <label htmlFor='quadril'>Quadril</label>
         <input
           type='range'
           id='quadril'
