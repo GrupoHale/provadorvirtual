@@ -1,17 +1,19 @@
 import { useState } from 'react';
 
 const imageMap = import.meta.glob('../assets/mannequin_formatos/*.jpg', { eager: true, as: 'url' });
+const imagesByName = Object.fromEntries(
+  Object.entries(imageMap).map(([path, url]) => [path.split('/').pop(), url])
+);
 
 export default function Mannequin() {
-  const [busto, setBusto] = useState('03');
-  const [cintura, setCintura] = useState('03');
-  const [quadril, setQuadril] = useState('03');
+  const [busto, setBusto] = useState(3);
+  const [cintura, setCintura] = useState(3);
+  const [quadril, setQuadril] = useState(3);
 
   const formato = [busto, cintura, quadril]
     .map((value) => value.toString().padStart(2, '0'))
     .join('');
-  const imageKey = `../assets/mannequin_formatos/${formato}.jpg`;
-  const imageSrc = imageMap[imageKey] ?? '';
+  const imageSrc = imagesByName[`${formato}.jpg`] ?? '';
 
   return (
     <div className='boneco'>
