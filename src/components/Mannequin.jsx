@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 const imageMap = import.meta.glob('../assets/mannequin_formatos/*.jpg', { eager: true, as: 'url' });
