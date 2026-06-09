@@ -1,36 +1,29 @@
+
 import { useState } from 'react';
+
+const imageMap = import.meta.glob('../assets/mannequin_formatos/*.jpg', { eager: true, import: 'default' });
+const imagesByName = Object.fromEntries(
+  Object.entries(imageMap).map(([path, url]) => [path.split('/').pop(), url])
+);
 
 export default function Mannequin() {
   const [busto, setBusto] = useState(3);
   const [cintura, setCintura] = useState(3);
   const [quadril, setQuadril] = useState(3);
 
-  // Gera formato tipo: 030303
   const formato = [busto, cintura, quadril]
-    .map((value) => Number(value).toString().padStart(2, '0'))
+    .map((value) => value.toString().padStart(2, '0'))
     .join('');
-
-  // Caminho direto (NUNCA quebra no build)
-  const imageSrc = `/mannequin_formatos/${formato}.jpg`;
+  const imageSrc = imagesByName[`${formato}.jpg`] ?? '';
 
   return (
     <div className='boneco'>
-      <img
-        src={imageSrc}
-        alt={`Mannequin ${formato}`}
-        onError={(e) => {
-          console.error('Imagem não encontrada:', imageSrc);
-          e.target.style.display = 'none';
-        }}
-      />
+      <img src={imageSrc} alt={`Mannequin ${formato}`} />
 
       <div className='formMedidas'>
         <h2>Ajuste o formato do corpo</h2>
 
-        <h3>
-          Este é o formato aproximado do corpo que geramos com suas medidas.
-          Ajuste somente se for necessário.
-        </h3>
+        <h3>Este é o formato aproximado do corpo que geramos com suas medidas. Ajuste somente se for necessário.</h3>
 
         <label htmlFor='busto'>Busto: {busto}</label>
         <input
@@ -39,7 +32,7 @@ export default function Mannequin() {
           min='1'
           max='5'
           value={busto}
-          onChange={(e) => setBusto(Number(e.target.value))}
+          onChange={(event) => setBusto(event.target.value)}
         />
 
         <label htmlFor='cintura'>Cintura: {cintura}</label>
@@ -49,7 +42,7 @@ export default function Mannequin() {
           min='1'
           max='5'
           value={cintura}
-          onChange={(e) => setCintura(Number(e.target.value))}
+          onChange={(event) => setCintura(event.target.value)}
         />
 
         <label htmlFor='quadril'>Quadril: {quadril}</label>
@@ -59,7 +52,7 @@ export default function Mannequin() {
           min='1'
           max='5'
           value={quadril}
-          onChange={(e) => setQuadril(Number(e.target.value))}
+          onChange={(event) => setQuadril(event.target.value)}
         />
       </div>
     </div>
