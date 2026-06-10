@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Mannequin() {
+export default function Mannequin({ onBack }) {
   const [busto, setBusto] = useState(3);
   const [cintura, setCintura] = useState(3);
   const [quadril, setQuadril] = useState(3);
@@ -23,7 +23,7 @@ export default function Mannequin() {
           e.target.style.display = 'none';
         }}
       />
-
+      
       <div className='formMedidas'>
         <h2>Ajuste o formato do corpo</h2>
 
@@ -61,7 +61,11 @@ export default function Mannequin() {
           value={quadril}
           onChange={(e) => setQuadril(Number(e.target.value))}
         />
-      </div>
+
+        <div className='card-footer'>
+          <button className='btn-voltar' type='button' onClick={onBack}>Voltar</button>
+        </div>
+      </div> 
     </div>
   );
 }

@@ -1,56 +1,36 @@
-import Mannequin from "./mannequin.jsx";
+export default function CalculoAlturaPeso({ onNext }) {
+  return (
+    <div className='card card-step'>
+      <div className='card-content'>
+        <div className='card-copy'>
+          <p className='subtitle'>Passo 1</p>
+          <h2>Conte-nos suas medidas</h2>
+          <p className='description'>Preencha altura, peso e idade para gerar o mannequin correto.</p>
 
-export default function CalculoAlturaPeso() {
+          <div className='form-row'>
+            <label htmlFor='altura'>Altura</label>
+            <input type='number' id='altura' min='100' max='300' placeholder='cm' />
+          </div>
 
-    const altura = document.getElementById('altura');
-    const peso = document.getElementById('peso');
-    const idade = document.getElementById('idade');
+          <div className='form-row'>
+            <label htmlFor='peso'>Peso</label>
+            <input type='number' id='peso' min='30' max='200' placeholder='kg' />
+          </div>
 
-    const imageProduto = `/produtos/produto1.png`;
-
-    return (
-        <div className='container-calculoAlturaPeso'>
-            <img src='/produtos/produto1.png' alt='' />
-
-            <div className='calculoAlturaPeso'>
-                <h2>Seja bem vinda ao provador virtual</h2>
-                
-                <p>Preencha os dados para experimentar este produto</p>
-                
-                <section>
-                    <label htmlFor=''>Altura</label>
-                    <input
-                        type='number'
-                        id='altura'
-                        min='100'
-                        max='300'
-                    />
-                </section>
-
-                <section>
-                    <label htmlFor=''>Peso</label>
-                    <input
-                        type='number'
-                        id='peso'
-                        min='30'
-                        max='200'
-                    />
-                </section>
-
-                <section>
-                    <label htmlFor=''>Idade</label>
-                    <input
-                        type='number'
-                        id='idade'
-                        min='0'
-                        max='120'
-                    />
-                </section>
-
-                <div className="div-btn-proximo">
-                    <button className="btn-proximo" onClick={<Mannequin/>}>Próximo</button>
-                </div>
-            </div>
+          <div className='form-row'>
+            <label htmlFor='idade'>Idade</label>
+            <input type='number' id='idade' min='0' max='120' placeholder='anos' />
+          </div>
         </div>
-    )
+
+        <div className='card-visual'>
+          <img src='/produtos/produto1.png' alt='Produto em destaque' />
+        </div>
+      </div>
+
+      <div className='card-footer'>
+        <button className='btn-primary' type='button' onClick={onNext}>Próximo</button>
+      </div>
+    </div>
+  )
 }
