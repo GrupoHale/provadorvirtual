@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Mannequin({ onBack }) {
+export default function Mannequin({ onBack, onShowRecommendation }) {
   const [busto, setBusto] = useState(3);
   const [cintura, setCintura] = useState(3);
   const [quadril, setQuadril] = useState(3);
@@ -64,6 +64,7 @@ export default function Mannequin({ onBack }) {
 
         <div className='card-footer'>
           <button className='btn-voltar' type='button' onClick={onBack}>Voltar</button>
+          <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation()}>Ver Recomendação</button>
         </div>
       </div> 
     </div>
