@@ -62,9 +62,9 @@ export default function Mannequin({ onBack, onShowRecommendation }) {
           onChange={(e) => setQuadril(Number(e.target.value))}
         />
 
-        <div className='card-footer'>
+        <div className='card-footer-mannequin'>
           <button className='btn-voltar' type='button' onClick={onBack}>Voltar</button>
-          <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation()}>Ver Recomendação</button>
+          <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation()}>Recomendação</button>
         </div>
       </div> 
     </div>

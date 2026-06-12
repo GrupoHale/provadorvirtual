@@ -30,11 +30,10 @@ export default function App() {
   return (
     <main className='app'>
       <header className='app-header'>
-        <div>
+        <div className='titulo'>
           <p className='eyebrow'>Provador Virtual</p>
-          <h1>Experimente as roupas com suas medidas</h1>
+          <h1>Experimente nossas roupas com suas medidas</h1>
         </div>
-        <div className='step-indicator'>Etapa {step} de 2</div>
       </header>
 
       <section className='page-content'>

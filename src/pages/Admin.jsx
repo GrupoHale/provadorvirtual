@@ -82,7 +82,6 @@ export default function AdminPage() {
         <div style={{ maxWidth: 520 }}>
           <p className='subtitle'>Área do Administrador</p>
           <h2>Login</h2>
-          <p className='description'>Faça login para cadastrar peças de roupa.</p>
           <form onSubmit={handleLogin}>
             <div className='form-row'>
               <label>Usuário</label>

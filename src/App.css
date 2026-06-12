@@ -37,7 +37,7 @@ input {
 
 .app-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-end;
   gap: 24px;
   margin-bottom: 32px;
@@ -196,7 +196,12 @@ input::-webkit-inner-spin-button {
 .card-footer {
   display: inline-flex;
   justify-content: flex-end;
-  padding-top: 24px;
+  padding-top: 2%;
+} & .card-footer-mannequin {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 59.01%;
+  width: 100%;
 }
 
 .card-footer .btn-primary,
