@@ -3,10 +3,11 @@ import './App.css'
 import Mannequin from './components/Mannequin.jsx'
 import CalculoAlturaPeso from './components/CalculoAlturaPeso.jsx'
 import RecomendarTamanho from './components/RecomendarTamanho.jsx'
+import MedidasCliente from './components/MedidasCliente.jsx'
 import AdminPage from './pages/Admin.jsx'
 
 export default function App() {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
   const [mostrarRecomendacao, setMostrarRecomendacao] = useState(false)
   const [tamanhoRecomendado, setTamanhoRecomendado] = useState('P')
   const [route, setRoute] = useState(location.hash || '')
@@ -41,12 +42,13 @@ export default function App() {
           <AdminPage />
         ) : (
           <>
-            {step === 1 && <CalculoAlturaPeso onNext={() => setStep(2)} />}
-            {step === 2 && <Mannequin onBack={() => setStep(1)} onShowRecommendation={handleShowRecommendation} />}
+            {step === 0 && <CalculoAlturaPeso onNext={() => setStep(1)} />}
+            {step === 1 && <MedidasCliente onBack={() => setStep(1)} onNext={() => setStep(2)} />}
+            {step === 2 && <Mannequin onBack={() => setStep(3)} onShowRecommendation={handleShowRecommendation} />}
           </>
         )}
       </section>
-
+      
       {mostrarRecomendacao && (
         <RecomendarTamanho 
           tamanhoRecomendado={tamanhoRecomendado}

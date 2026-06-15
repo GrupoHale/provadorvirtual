@@ -57,11 +57,6 @@ export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeC
 
           {/* Coluna central - Recomendação */}
           <div className="recomendacao-centro">
-            <div className="recomendacao-titulo">MELHOR OPÇÃO</div>
-            
-            <div className="tamanho-recomendado">
-              <div className="tamanho-badge">{tamanhoSelecionado}</div>
-            </div>
 
             {/* Mannequin */}
             <div className="recomendacao-mannequin">
@@ -71,20 +66,6 @@ export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeC
               
               {/* Indicadores de ajuste */}
               <div className="ajuste-indicators">
-                <div className="ajuste-item folgado">
-                  <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <path d="M8 12l2 2 6-6" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
-                  </svg>
-                  <span>levemente folgado</span>
-                </div>
-                <div className="ajuste-item justo">
-                  <svg viewBox="0 0 24 24" width="20" height="20">
-                    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <path d="M8 12l2 2 6-6" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
-                  </svg>
-                  <span>levemente justo</span>
-                </div>
               </div>
             </div>
 
@@ -100,8 +81,7 @@ export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeC
                 <button
                   key={tamanho}
                   className={`btn-tamanho ${tamanho === tamanhoSelecionado ? 'ativo' : ''}`}
-                  onClick={() => handleSizeChange(tamanho)}
-                >
+                  onClick={() => handleSizeChange(tamanho)}>
                   {tamanho}
                 </button>
               ))}

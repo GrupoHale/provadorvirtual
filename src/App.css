@@ -450,7 +450,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .mannequin-placeholder img {
@@ -1192,6 +1192,7 @@ input::-webkit-inner-spin-button {
     .boneco img {
       max-height: 280px;
       border-radius: 12px;
+      box-shadow: #0f172a;
     }
 
     .formMedidas {
@@ -1206,7 +1207,7 @@ input::-webkit-inner-spin-button {
       font-size: 12px;
       line-height: 1.5;
     }
-
+    
     .formMedidas label {
       font-size: 13px;
       margin-bottom: 6px;

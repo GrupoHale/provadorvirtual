@@ -10,8 +10,6 @@ export default function CalculoAlturaPeso({ onNext }) {
           <div className='form-row'>
             <label htmlFor='altura'>Altura</label>
             <input type='number' id='altura' min='100' max='300' placeholder='cm' />
-
-        
           </div>
 
           <div className='form-row'>
@@ -29,7 +27,7 @@ export default function CalculoAlturaPeso({ onNext }) {
           <img src='/produtos/produto1.png' alt='Produto em destaque' />
         </div>
       </div>
-
+      
       <div className='card-footer'>
         <button className='btn-primary' type='button' onClick={onNext}>Próximo</button>
       </div>

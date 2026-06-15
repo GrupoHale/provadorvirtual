@@ -1,0 +1,36 @@
+export default function MedidasCliente({ onNext }) {
+    return (
+        <div className='card card-step'>
+            <div className='card-content'>
+                <div className='card-copy'>
+                    <p className='subtitle'>Passo 2</p>
+                    <h2>Conte-nos suas medidas</h2>
+                    <p className='description'>Preencha Busto, cintura e quadril para gerar o mannequin correto.</p>
+
+                    <div className='form-row'>
+                        <label htmlFor='busto'>Busto</label>
+                        <input type='number' id='busto' min='25' max='120' placeholder='cm' />
+                    </div>
+
+                    <div className='form-row'>
+                        <label htmlFor='cintura'>Cintura</label>
+                        <input type='number' id='cintura' min='30' max='120' placeholder='cm' />
+                    </div>
+
+                    <div className='form-row'>
+                        <label htmlFor='quadril'>Quadril</label>
+                        <input type='number' id='quadril' min='0' max='120' placeholder='cm' />
+                    </div>
+                </div>
+
+                <div className='card-visual'>
+                    <img src='/public/comoMedir.jpg' alt='' />
+                </div>
+            </div>
+
+            <div className='card-footer'>
+                <button className='btn-primary' type='button' onClick={onNext}>Próximo</button>
+            </div>
+        </div>
+    )
+}
