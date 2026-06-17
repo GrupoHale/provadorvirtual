@@ -29,7 +29,7 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
                     <img src='/public/_comoMedirCrop2.jpg' alt='' />
                 </div>
             </div>
-
+            
             <div className='card-footer'>
                 <button className='btn-primary' type='button' onClick={onNext}>Próximo</button>
             </div>

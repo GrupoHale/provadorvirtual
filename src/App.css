@@ -15,6 +15,7 @@
 
 * {
   box-sizing: border-box;
+  user-select: none;
 }
 
 body {
@@ -22,6 +23,12 @@ body {
   font-family: var(--font-sans);
   background: var(--background);
   color: var(--text);
+}
+
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 button,
@@ -324,16 +331,18 @@ input::-webkit-inner-spin-button {
   border-radius: var(--radius);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.329);
   max-width: 1000px;
-  width: 40%;
+  width: 25%;
+  height: 90px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
   animation: slideUp 0.3s ease-out;
-} & h1 {
+} & .modal-recomendacao-tamanho h1 {
   color: white;
+  font-size: 35px;
 }
 
-.container-modal-recomendacao-tamanho {
+.modal-recomendacao-tamanho2 {
   display: flex;
   justify-content: center;
   align-items: center;

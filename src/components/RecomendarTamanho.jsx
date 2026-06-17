@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeChange, altura, peso, busto, cintura, quadril }) {
+export default function RecomendarTamanho({ onBack ,tamanhoRecomendado, onClose, onSizeChange, altura, peso, busto, cintura, quadril }) {
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(tamanhoRecomendado);
   
   // Mapeamento de tamanhos com informações
@@ -69,7 +69,7 @@ export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeC
               </div>
             </div>
 
-            <button className="btn-editar">Editar Medidas</button>
+            <button className="btn-editar" onClick={onBack}type="button">Reiniciar</button>
           </div>
 
           {/* Coluna direita - Outros tamanhos */}
@@ -88,12 +88,14 @@ export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeC
               <div className='container-modal-recomedadacao-tamanho'>
                 <h3>Tamanho recomendado:</h3>
 
-                <div className='modal-recomendacao-tamanho'>
-                  <h1>{tamanhoSelecionado}</h1>
+                <div className='modal-recomendacao-tamanho2'>
+                  <div className="modal-recomendacao-tamanho">
+                    <h1>{tamanhoSelecionado}</h1>
+                  </div>
                 </div>
               </div>
             </div>
-            
+
             <button className="btn-fechar-principal" onClick={onClose}>FECHAR</button>
           </div>
         </div>
