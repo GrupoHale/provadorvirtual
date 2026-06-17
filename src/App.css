@@ -319,6 +319,26 @@ input::-webkit-inner-spin-button {
   animation: slideUp 0.3s ease-out;
 }
 
+.modal-recomendacao-tamanho {
+  background: black;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.329);
+  max-width: 1000px;
+  width: 40%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+} & h1 {
+  color: white;
+}
+
+.container-modal-recomendacao-tamanho {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(20px);

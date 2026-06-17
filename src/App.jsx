@@ -11,6 +11,12 @@ export default function App() {
   const [mostrarRecomendacao, setMostrarRecomendacao] = useState(false)
   const [tamanhoRecomendado, setTamanhoRecomendado] = useState('P')
   const [route, setRoute] = useState(location.hash || '')
+  const [altura, setAltura] = useState()
+  const [peso, setPeso] = useState()
+  const [idade, setIdade] = useState()
+  const [busto, setBusto] = useState()
+  const [cintura, setCintura] = useState()
+  const [quadril, setQuadril] = useState()
 
   useEffect(() => {
     function onHash() {
@@ -27,7 +33,7 @@ export default function App() {
   const handleCloseRecommendation = () => {
     setMostrarRecomendacao(false)
   }
-  
+
   return (
     <main className='app'>
       <header className='app-header'>
@@ -42,18 +48,23 @@ export default function App() {
           <AdminPage />
         ) : (
           <>
-            {step === 0 && <CalculoAlturaPeso onNext={() => setStep(1)} />}
-            {step === 1 && <MedidasCliente onBack={() => setStep(1)} onNext={() => setStep(2)} />}
-            {step === 2 && <Mannequin onBack={() => setStep(3)} onShowRecommendation={handleShowRecommendation} />}
+            {step === 0 && <CalculoAlturaPeso onNext={() => setStep(1)} altura={altura} setAltura={setAltura} peso={peso} setPeso={setPeso} idade={idade} setIdade={setIdade} />}
+            {step === 1 && <MedidasCliente onNext={() => setStep(2)} busto={busto} setBusto={setBusto} cintura={cintura} setCintura={setCintura} quadril={quadril} setQuadril={setQuadril} />}
+            {step === 2 && <Mannequin onBack={() => setStep(3)} onShowRecommendation={handleShowRecommendation} altura={altura} peso={peso} busto={busto} cintura={cintura} quadril={quadril} />}
           </>
         )}
       </section>
-      
+
       {mostrarRecomendacao && (
         <RecomendarTamanho 
           tamanhoRecomendado={tamanhoRecomendado}
           onClose={handleCloseRecommendation}
           onSizeChange={setTamanhoRecomendado}
+          altura={altura}
+          peso={peso}
+          busto={busto}
+          cintura={cintura}
+          quadril={quadril}
         />
       )}
     </main>

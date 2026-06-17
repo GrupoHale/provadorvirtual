@@ -15,15 +15,9 @@ export default function Mannequin({ onBack, onShowRecommendation }) {
   
   return (
     <div className='boneco'>
-      <img
-        src={imageSrc}
-        alt={`Mannequin ${formato}`}
-        onError={(e) => {
-          console.error('Imagem não encontrada:', imageSrc);
-          e.target.style.display = 'none';
-        }}
+      <img src={imageSrc} alt={`Mannequin ${formato}`} onError={(e) => {console.error('Imagem não encontrada:',imageSrc); e.target.style.display = 'none';}}
       />
-      
+
       <div className='formMedidas'>
         <h2>Ajuste o formato do corpo</h2>
 
@@ -31,7 +25,7 @@ export default function Mannequin({ onBack, onShowRecommendation }) {
           Este é o formato aproximado do corpo que geramos com suas medidas.
           Ajuste somente se for necessário.
         </h3>
-
+        
         <label htmlFor='busto'>Busto</label>
         <input
           type='range'
@@ -64,7 +58,7 @@ export default function Mannequin({ onBack, onShowRecommendation }) {
 
         <div className='card-footer-mannequin'>
           <button className='btn-voltar' type='button' onClick={onBack}>Voltar</button>
-          <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation()}>Recomendação</button>
+          <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation(imageSrc)}>Recomendação</button>
         </div>
       </div> 
     </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeChange }) {
+export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeChange, altura, peso, busto, cintura, quadril }) {
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(tamanhoRecomendado);
   
   // Mapeamento de tamanhos com informações
@@ -34,23 +34,23 @@ export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeC
             <div className="medidas-info">
               <div className="medida-item">
                 <span className="medida-label">Altura</span>
-                <span className="medida-valor">170 cm</span>
+                <span className="medida-valor">{altura} cm</span>
               </div>
               <div className="medida-item">
                 <span className="medida-label">Peso</span>
-                <span className="medida-valor">65 kg</span>
+                <span className="medida-valor">{peso} kg</span>
               </div>
               <div className="medida-item">
                 <span className="medida-label">Busto</span>
-                <span className="medida-valor">88 cm</span>
+                <span className="medida-valor">{busto} cm</span>
               </div>
               <div className="medida-item">
                 <span className="medida-label">Cintura</span>
-                <span className="medida-valor">70 cm</span>
+                <span className="medida-valor">{cintura} cm</span>
               </div>
               <div className="medida-item">
                 <span className="medida-label">Quadril</span>
-                <span className="medida-valor">98 cm</span>
+                <span className="medida-valor">{quadril} cm</span>
               </div>
             </div>
           </div>
@@ -85,6 +85,13 @@ export default function RecomendarTamanho({ tamanhoRecomendado, onClose, onSizeC
                   {tamanho}
                 </button>
               ))}
+              <div className='container-modal-recomedadacao-tamanho'>
+                <h3>Tamanho recomendado:</h3>
+
+                <div className='modal-recomendacao-tamanho'>
+                  <h1>{tamanhoSelecionado}</h1>
+                </div>
+              </div>
             </div>
             
             <button className="btn-fechar-principal" onClick={onClose}>FECHAR</button>
