@@ -57,7 +57,7 @@ export default function Mannequin({ onBack, onShowRecommendation }) {
         />
 
         <div className='card-footer-mannequin'>
-          <button className='btn-voltar' type='button' onClick={onBack}>Voltar</button>
+          <button className='btn-voltar' type='button' onClick={onBack}>Reiniciar</button>
           <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation(imageSrc)}>Recomendação</button>
         </div>
       </div> 
