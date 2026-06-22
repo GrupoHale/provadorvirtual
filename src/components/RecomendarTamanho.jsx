@@ -12,7 +12,6 @@ export default function RecomendarTamanho({ onBack ,tamanhoRecomendado, onClose,
     GG: { label: 'GG', ajuste: 'levemente folgado' }
   };
 
-  const tamanhoAtual = tamanhos[tamanhoSelecionado] || tamanhos.P;
   const tamanhosMais = Object.keys(tamanhos).filter(t => t !== tamanhoSelecionado);
 
   const handleSizeChange = (novo) => {

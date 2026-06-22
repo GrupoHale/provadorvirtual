@@ -1,14 +1,14 @@
-import { useState } from 'react'
-
-export default function CalculoAlturaPeso({ onNext, altura, setAltura, peso, setPeso, idade, setIdade }) {
+export default function CalculoAlturaPeso({ onNext, altura, setAltura, peso, setPeso, idade, setIdade, roupaSelecionada }) {
 
   const isButtonEnabled = altura !== "";
+  const imagemRoupa = roupaSelecionada?.imagem || roupaSelecionada?.image || '/produtos/produto1.png';
+  const nomeRoupa = roupaSelecionada?.nome || roupaSelecionada?.name || 'Produto em destaque';
 
   return (
     <div className='card card-step'>
       <div className='card-content'>
         <div className='card-copy'>
-          <p className='subtitle'>Passo 1</p>
+          <p className='subtitle'>Passo 2</p>
           <h2>Informe suas medidas antropométricas</h2>
           <p className='description'>Preencha altura, peso e idade.</p>
 
@@ -28,8 +28,9 @@ export default function CalculoAlturaPeso({ onNext, altura, setAltura, peso, set
           </div>
         </div>
 
-        <div className='card-visual'>
-          <img src='/produtos/produto1.png' alt='Produto em destaque' />
+        <div className='card-visual roupa-passo-visual'>
+          <img src={imagemRoupa} alt={nomeRoupa} />
+          <strong>{nomeRoupa}</strong>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Mannequin({ onBack, onShowRecommendation }) {
+export default function Mannequin({ onBack, onShowRecommendation, roupaSelecionada }) {
   const [busto, setBusto] = useState(3);
   const [cintura, setCintura] = useState(3);
   const [quadril, setQuadril] = useState(3);
@@ -19,6 +19,16 @@ export default function Mannequin({ onBack, onShowRecommendation }) {
       />
 
       <div className='formMedidas'>
+        {roupaSelecionada && (
+          <div className='roupa-selecionada-resumo'>
+            {roupaSelecionada.imagem && <img src={roupaSelecionada.imagem} alt={roupaSelecionada.nome} />}
+            <div>
+              <span>Roupa selecionada</span>
+              <strong>{roupaSelecionada.nome}</strong>
+            </div>
+          </div>
+        )}
+
         <h2>Ajuste o formato do corpo</h2>
 
         <h3>

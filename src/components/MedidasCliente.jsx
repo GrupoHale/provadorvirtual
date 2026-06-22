@@ -8,7 +8,7 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
         <div className='card card-step'>
             <div className='card-content'>
                 <div className='card-copy'>
-                    <p className='subtitle'>Passo 2</p>
+                    <p className='subtitle'>Passo 3</p>
                     <h2>Conte-nos suas medidas</h2>
                     <p className='description'>Preencha Busto, cintura e quadril para gerar o mannequin correto.</p>
 
@@ -21,7 +21,7 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
                         <label htmlFor='busto'>Busto</label>
                         <input type='number' id='busto' min='25' max='120' placeholder='cm' value={busto} onChange={(e) => setBusto(Number(e.target.value))} />
                     </div>
-
+                    
                     <div className='form-row' style={{display: checked ? "none" : "block"}}>
                         <label htmlFor='cintura'>Cintura</label>
                         <input type='number' id='cintura' min='30' max='120' placeholder='cm' value={cintura} onChange={(e) => setCintura(Number(e.target.value))} />
