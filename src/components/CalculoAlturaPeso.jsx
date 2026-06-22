@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 export default function CalculoAlturaPeso({ onNext, altura, setAltura, peso, setPeso, idade, setIdade }) {
 
+  const isButtonEnabled = altura !== "";
+
   return (
     <div className='card card-step'>
       <div className='card-content'>
@@ -12,17 +14,17 @@ export default function CalculoAlturaPeso({ onNext, altura, setAltura, peso, set
 
           <div className='form-row'>
             <label htmlFor='altura'>Altura</label>
-            <input type='number' id='altura' min='100' max='300' placeholder='cm' value={altura} onChange={(e) => setAltura(Number(e.target.value))} />
+            <input type='number' id='altura' min='' max='300' placeholder='cm' value={altura} onChange={(e) => setAltura(e.target.value)} />
           </div>
 
           <div className='form-row'>
             <label htmlFor='peso'>Peso</label>
-            <input type='number' id='peso' min='30' max='200' placeholder='kg' value={peso} onChange={(e) => setPeso(Number(e.target.value))} />
+            <input type='number' id='peso' min='30' max='200' placeholder='kg' value={peso} onChange={(e) => setPeso(e.target.value)} />
           </div>
 
           <div className='form-row'>
             <label htmlFor='idade'>Idade</label>
-            <input type='number' id='idade' min='0' max='120' placeholder='anos' value={idade} onChange={(e) => setIdade(Number(e.target.value))} />
+            <input type='number' id='idade' min='0' max='120' placeholder='anos' value={idade} onChange={(e) => setIdade(e.target.value)} />
           </div>
         </div>
 
@@ -32,7 +34,7 @@ export default function CalculoAlturaPeso({ onNext, altura, setAltura, peso, set
       </div>
 
       <div className='card-footer'>
-        <button className='btn-primary' type='button' onClick={onNext}>Próximo</button>
+        <button className='btn-primary' type='button' disabled={!isButtonEnabled} onClick={onNext}>Próximo</button>
       </div>
     </div>
   )

@@ -17,9 +17,9 @@ export default function RecomendarTamanho({ onBack ,tamanhoRecomendado, onClose,
 
   const handleSizeChange = (novo) => {
     setTamanhoSelecionado(novo);
-    if (onSizeChange) onSizeChange(novo);
+    if (onSizeChange) onSizeChange(novo); 
   };
-
+  
   return (
     <div className="modal-recomendacao-overlay" onClick={onClose}>
       <div className="modal-recomendacao" onClick={(e) => e.stopPropagation()}>
@@ -69,7 +69,7 @@ export default function RecomendarTamanho({ onBack ,tamanhoRecomendado, onClose,
               </div>
             </div>
 
-            <button className="btn-editar" onClick={onBack}type="button">Reiniciar</button>
+            <button className="btn-editar" onClick={onBack}type="button">Editar medidas</button>
           </div>
 
           {/* Coluna direita - Outros tamanhos */}

@@ -124,6 +124,24 @@ input {
   line-height: 1.75;
 }
 
+.form-row-medidas {
+  display: flex;
+  justify-content: start;
+  margin-bottom: 18px;
+}
+
+#isMedidas:checked + .form-row {
+  display: none;
+}
+
+.form-row-medidas input {
+  width: 3%;
+}
+
+.form-row-medidas label {
+  font-size: 16px;
+}
+
 .form-row {
   display: grid;
   gap: 8px;
@@ -1271,3 +1289,4 @@ input::-webkit-inner-spin-button {
     }
   }
 }
+

@@ -59,7 +59,6 @@ export default function App() {
         <RecomendarTamanho 
           tamanhoRecomendado={tamanhoRecomendado}
           onClose={handleCloseRecommendation}
-          onBack={setStep}
           onSizeChange={setTamanhoRecomendado}
           altura={altura}
           peso={peso}
