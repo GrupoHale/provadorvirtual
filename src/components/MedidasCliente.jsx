@@ -10,7 +10,7 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
                 <div className='card-copy'>
                     <p className='subtitle'>Passo 3</p>
                     <h2>Conte-nos suas medidas</h2>
-                    <p className='description'>Preencha Busto, cintura e quadril para gerar o mannequin correto.</p>
+                    <p className='description'>Preencha busto, cintura e quadril para gerar o mannequin correto.</p>
 
                     <div className="form-row-medidas">
                         <input id="isMedidas" type="checkbox" onChange={(e) => setChecked(e.target.checked)} />

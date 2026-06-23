@@ -43,9 +43,6 @@ export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada,
       <div className='card-copy selecionar-roupa-header'>
         <p className='subtitle'>Passo 1</p>
         <h2>Escolha a roupa que deseja provar</h2>
-        <p className='description'>
-          Selecione uma das pecas cadastradas pelo administrador para continuar o provador.
-        </p>
       </div>
 
       {roupas.length === 0 ? (
