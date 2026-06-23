@@ -19,7 +19,8 @@ export default function App() {
   const [cintura, setCintura] = useState()
   const [quadril, setQuadril] = useState()
   const [roupaSelecionada, setRoupaSelecionada] = useState()
-
+  const [formatoCorpo, setFormatoCorpo] = useState('030303')
+  
   useEffect(() => {
     function onHash() {
       setRoute(location.hash || '')
@@ -28,7 +29,8 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
-  const handleShowRecommendation = () => {
+  const handleShowRecommendation = (formato) => {
+    if (formato) setFormatoCorpo(formato)
     setMostrarRecomendacao(true)
   }
 
@@ -67,12 +69,20 @@ export default function App() {
         <RecomendarTamanho 
           tamanhoRecomendado={tamanhoRecomendado}
           onClose={handleCloseRecommendation}
+          onBack={() => {
+            setMostrarRecomendacao(false)
+            setStep(3)
+          }}
           onSizeChange={setTamanhoRecomendado}
           altura={altura}
           peso={peso}
           busto={busto}
+          setBusto={setBusto}
           cintura={cintura}
+          setCintura={setCintura}
           quadril={quadril}
+          setQuadril={setQuadril}
+          formatoCorpo={formatoCorpo}
           roupaSelecionada={roupaSelecionada}
         />
       )}

@@ -19,16 +19,6 @@ export default function Mannequin({ onBack, onShowRecommendation, roupaSeleciona
       />
 
       <div className='formMedidas'>
-        {roupaSelecionada && (
-          <div className='roupa-selecionada-resumo'>
-            {roupaSelecionada.imagem && <img src={roupaSelecionada.imagem} alt={roupaSelecionada.nome} />}
-            <div>
-              <span>Roupa selecionada</span>
-              <strong>{roupaSelecionada.nome}</strong>
-            </div>
-          </div>
-        )}
-
         <h2>Ajuste o formato do corpo</h2>
 
         <h3>
@@ -68,7 +58,7 @@ export default function Mannequin({ onBack, onShowRecommendation, roupaSeleciona
 
         <div className='card-footer-mannequin'>
           <button className='btn-voltar' type='button' onClick={onBack}>Voltar</button>
-          <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation(imageSrc)}>Recomendação</button>
+          <button className='btn-proximo' type='button' onClick={() => onShowRecommendation && onShowRecommendation(formato)}>Recomendação</button>
         </div>
       </div> 
     </div>
