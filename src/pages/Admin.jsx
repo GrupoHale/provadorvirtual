@@ -156,16 +156,16 @@ export default function AdminPage() {
           <div className='admin-form admin-screen'>
             <form onSubmit={handleSubmit}>
               <div className='form-row'>
-                <label>Nome da peca</label>
+                <label>Nome</label>
                 <input name='name' value={form.name} onChange={handleChange} />
               </div>
               <div className='form-row'>
-                <label>Descricao</label>
+                <label>Descrição</label>
                 <input name='description' value={form.description} onChange={handleChange} />
               </div>
 
               <div className='form-row'>
-                <label>Imagem da peca</label>
+                <label>Imagem</label>
                 <input type='file' accept='image/*' onChange={handleImageChange} />
                 {form.image && (
                   <div className='admin-image-preview'>
@@ -219,7 +219,7 @@ export default function AdminPage() {
               </div>
 
               <div className='card-footer' style={{ marginTop: 18 }}>
-                <button className='btn-primary' type='submit'>Salvar peça</button>
+                <button className='btn-primary' type='submit'>Salvar</button>
               </div>
             </form>
           </div>
