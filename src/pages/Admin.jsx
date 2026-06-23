@@ -127,12 +127,7 @@ export default function AdminPage() {
       <div>
         <div className='admin-header'>
           <div>
-            <p className='subtitle'>Area do Administrador</p>
-            <h2>
-              {adminView === 'create' && 'Cadastrar peça'}
-              {adminView === 'list' && 'Lista de peças'}
-              {adminView === 'details' && 'Detalhes'}
-            </h2>
+            <p className='subtitle'>Área do Administrador</p>
           </div>
           <div className='admin-actions'>
             <button className='btn-voltar' onClick={() => setLoggedIn(false)}>Logout</button>
