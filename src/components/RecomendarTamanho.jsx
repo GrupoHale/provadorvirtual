@@ -199,6 +199,7 @@ export default function RecomendarTamanho({
                   <span className="medida-label">Quadril</span>
                   <span className="medida-valor">{quadril} cm</span>
                 </div>
+                  <button className="btn-editar" onClick={abrirEdicaoMedidas} type="button">Editar medidas</button>
               </div>
             </div>
 
@@ -222,8 +223,6 @@ export default function RecomendarTamanho({
                   ))}
                 </div>
               </div>
-
-              <button className="btn-editar" onClick={abrirEdicaoMedidas} type="button">Editar medidas</button>
             </div>
 
             <div className="recomendacao-tamanhos">

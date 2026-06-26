@@ -42,7 +42,7 @@ export default function AdminPage() {
       return { ...prev, sizes }
     })
   }
-
+  
   function removeSize(index) {
     setForm(prev => ({ ...prev, sizes: prev.sizes.filter((_, i) => i !== index) }))
   }

@@ -254,29 +254,30 @@ input::-webkit-inner-spin-button {
 }
 
 .selecionar-roupa-header {
-  max-width: 720px;
+  max-width: 100%;
+  margin-bottom: 55px;
 }
 
 .roupas-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
+  gap: 15px;
   align-items: stretch;
-  width: 50%;
+  width: 100%;
 }
 
 .roupa-card {
   display: grid;
-  gap: 12px;
+  gap: 10px;
   align-content: start;
   min-height: 260px;
-  padding: 12px;
-  border: 2px solid var(--border);
-  border-radius: 16px;
+  padding: 2px;
+  border: 3px solid var(--border);
+  border-radius: 20px;
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -285,6 +286,7 @@ input::-webkit-inner-spin-button {
   border-color: black;
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
   transform: translateY(-1px);
+  scale: 1.10;
 }
 
 .roupa-image-wrap {
@@ -832,7 +834,7 @@ input::-webkit-inner-spin-button {
   max-width: 200px;
 }
 
-.mannequin-placeholder {
+.mannequin-placeholder  {
   width: 100%;
   aspect-ratio: 3 / 4;
   background: var(--surface-strong);
@@ -852,15 +854,15 @@ input::-webkit-inner-spin-button {
 
 .ajuste-indicators {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
+  flex-direction: row;
+  gap: 12px;
+  font-weight: bold;
 }
 
 .ajuste-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 25px;
   padding: 8px 12px;
   border-radius: 8px;
   background: var(--surface-strong);
@@ -869,7 +871,7 @@ input::-webkit-inner-spin-button {
 }
 
 .ajuste-item svg {
-  flex-shrink: 0;
+  flex-shrink: 2;
 }
 
 .btn-editar {
@@ -924,17 +926,17 @@ input::-webkit-inner-spin-button {
 
 .ajuste-item.apertado .ajuste-dot,
 .faixa-ajuste.apertado {
-  background: #dc2626;
+  background: rgba(255, 0, 0, 0.527);
 }
 
 .ajuste-item.folgado .ajuste-dot,
 .faixa-ajuste.folgado {
-  background: #f59e0b;
+  background: #ff990085;
 }
 
 .ajuste-item.perfeito .ajuste-dot,
 .faixa-ajuste.perfeito {
-  background: #16a34a;
+  background: #00ff5e80;
 }
 
 .faixa-ajuste {
@@ -956,17 +958,17 @@ input::-webkit-inner-spin-button {
 }
 
 .faixa-busto {
-  top: 31%;
+  top: 25%;
 }
 
 .faixa-cintura {
-  top: 47%;
+  top: 35%;
   left: 22%;
   right: 22%;
 }
 
 .faixa-quadril {
-  top: 62%;
+  top: 45%;
   left: 17%;
   right: 17%;
 }
@@ -1541,6 +1543,7 @@ input::-webkit-inner-spin-button {
 
     .card-visual {
       min-height: 240px;
+      background-image: cover;
     }
 
     .boneco img {

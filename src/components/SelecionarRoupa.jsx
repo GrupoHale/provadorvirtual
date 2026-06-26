@@ -47,8 +47,7 @@ export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada,
 
       {roupas.length === 0 ? (
         <div className='empty-state'>
-          <h3>Nenhuma peca cadastrada</h3>
-          <p className='description'>Cadastre uma roupa na area do administrador para iniciar a prova.</p>
+          <h3>Nenhuma peça cadastrada</h3>
         </div>
       ) : (
         <div className='roupas-grid'>
