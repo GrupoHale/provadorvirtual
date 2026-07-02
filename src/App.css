@@ -159,6 +159,15 @@ input {
   border: 1px solid var(--border);
   background: var(--surface-strong);
   color: var(--text);
+} & .form-row select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  font-size: 20px;
 }
 
 input::-webkit-outer-spin-button,

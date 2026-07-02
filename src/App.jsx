@@ -59,7 +59,7 @@ export default function App() {
           <>
             {step === 0 && <SelecionarRoupa roupaSelecionada={roupaSelecionada} setRoupaSelecionada={setRoupaSelecionada} onNext={handleSelecionarRoupa} />}
             {step === 1 && <CalculoAlturaPeso onNext={() => setStep(2)} altura={altura} setAltura={setAltura} peso={peso} setPeso={setPeso} idade={idade} setIdade={setIdade} roupaSelecionada={roupaSelecionada} />}
-            {step === 2 && <MedidasCliente onNext={() => setStep(3)} busto={busto} setBusto={setBusto} cintura={cintura} setCintura={setCintura} quadril={quadril} setQuadril={setQuadril} />}
+            {step === 2 && <MedidasCliente onNext={() => setStep(3)} busto={busto} setBusto={setBusto} cintura={cintura} setCintura={setCintura} quadril={quadril} setQuadril={setQuadril} roupaSelecionada={roupaSelecionada} />}
             {step === 3 && <Mannequin onBack={() => setStep(0)} onShowRecommendation={handleShowRecommendation} altura={altura} peso={peso} busto={busto} cintura={cintura} quadril={quadril} roupaSelecionada={roupaSelecionada} />}
           </>
         )}

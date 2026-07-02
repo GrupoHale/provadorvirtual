@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 
-const initialForm = { name: '', description: '', sizes: [], image: '' }
+const CATEGORIAS = [
+  { id: 1, nome: "blusa", medidas: ["busto", "cintura", "quadril"] },
+  { id: 2, nome: "camisa", medidas: ["busto", "cintura", "quadril"] },
+  { id: 3, nome: "calça", medidas: ["cintura", "quadril", "comprimento"] },
+  { id: 4, nome: "vestido", medidas: ["busto", "cintura", "quadril", "comprimento"] },
+  { id: 5, nome: "saia", medidas: ["cintura", "quadril", "comprimento"] }
+]
+
+const initialForm = { categoria: 'blusa', name: '', description: '', sizes: [], image: '' }
 
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -28,9 +36,20 @@ export default function AdminPage() {
   }
 
   function addSize() {
+    const categoriaSelecionada = CATEGORIAS.find(c => c.nome === form.categoria)
+    const medidas = categoriaSelecionada?.medidas || []
+    
+    const measurements = {}
+    medidas.forEach(m => {
+      if (m === 'busto') measurements.bust = ''
+      else if (m === 'cintura') measurements.waist = ''
+      else if (m === 'quadril') measurements.hips = ''
+      else if (m === 'comprimento') measurements.length = ''
+    })
+    
     setForm(prev => ({
       ...prev,
-      sizes: [...prev.sizes, { label: '', measurements: { bust: '', waist: '', hips: '', length: '' } }]
+      sizes: [...prev.sizes, { label: '', measurements }]
     }))
   }
 
@@ -67,6 +86,10 @@ export default function AdminPage() {
 
   function handleSubmit(e) {
     e.preventDefault()
+    if (!form.name.trim()) {
+      alert('Por favor, preencha o nome da peça')
+      return
+    }
     setPieces(prev => [...prev, form])
     setForm(initialForm)
     setAdminView('list')
@@ -94,6 +117,14 @@ export default function AdminPage() {
       // Ignore storage errors.
     }
   }, [pieces])
+
+
+
+
+  function getMedidasCategoria() {
+    const categoriaSelecionada = CATEGORIAS.find(c => c.nome === form.categoria)
+    return categoriaSelecionada?.medidas || []
+  }
 
   if (!loggedIn) {
     return (
@@ -155,6 +186,16 @@ export default function AdminPage() {
         {adminView === 'create' && (
           <div className='admin-form admin-screen'>
             <form onSubmit={handleSubmit}>
+            <div className='form-row'>
+                <label>Selecione a categoria</label>
+                <select name='categoria' value={form.categoria} onChange={handleChange}>
+                  {CATEGORIAS.map(categoria => (
+                    <option key={categoria.id} value={categoria.nome}>
+                      {categoria.nome.charAt(0).toUpperCase() + categoria.nome.slice(1)}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className='form-row'>
                 <label>Nome</label>
                 <input name='name' value={form.name} onChange={handleChange} />
@@ -181,6 +222,7 @@ export default function AdminPage() {
                   Adicione tamanhos e as medidas correspondentes.
                 </p>
 
+
                 {form.sizes.map((size, i) => (
                   <div key={i} className='card admin-size-card'>
                     <div className='admin-size-row'>
@@ -190,22 +232,30 @@ export default function AdminPage() {
                           <input value={size.label} onChange={e => updateSize(i, 'label', e.target.value)} />
                         </div>
                         <div className='formMedidas-cadastro' style={{ marginTop: 8 }}>
-                          <div>
-                            <label>Busto (cm)</label>
-                            <input value={size.measurements.bust} onChange={e => updateSize(i, 'bust', e.target.value)} />
-                          </div>
-                          <div>
-                            <label>Cintura (cm)</label>
-                            <input value={size.measurements.waist} onChange={e => updateSize(i, 'waist', e.target.value)} />
-                          </div>
-                          <div>
-                            <label>Quadril (cm)</label>
-                            <input value={size.measurements.hips} onChange={e => updateSize(i, 'hips', e.target.value)} />
-                          </div>
-                          <div>
-                            <label>Comprimento (cm)</label>
-                            <input value={size.measurements.length} onChange={e => updateSize(i, 'length', e.target.value)} />
-                          </div>
+                          {getMedidasCategoria().includes('busto') && (
+                            <div>
+                              <label>Busto (cm)</label>
+                              <input value={size.measurements.bust || ''} onChange={e => updateSize(i, 'bust', e.target.value)} />
+                            </div>
+                          )}
+                          {getMedidasCategoria().includes('cintura') && (
+                            <div>
+                              <label>Cintura (cm)</label>
+                              <input value={size.measurements.waist || ''} onChange={e => updateSize(i, 'waist', e.target.value)} />
+                            </div>
+                          )}
+                          {getMedidasCategoria().includes('quadril') && (
+                            <div>
+                              <label>Quadril (cm)</label>
+                              <input value={size.measurements.hips || ''} onChange={e => updateSize(i, 'hips', e.target.value)} />
+                            </div>
+                          )}
+                          {getMedidasCategoria().includes('comprimento') && (
+                            <div>
+                              <label>Comprimento (cm)</label>
+                              <input value={size.measurements.length || ''} onChange={e => updateSize(i, 'length', e.target.value)} />
+                            </div>
+                          )}
                         </div>
                       </div>
                       <button type='button' className='btn-editar' onClick={() => removeSize(i)}>Remover</button>
@@ -277,6 +327,9 @@ export default function AdminPage() {
 
               <div className='piece-details-info'>
                 <h3>{pieces[selectedPieceIndex].name}</h3>
+                <p className='description' style={{ marginBottom: 12 }}>
+                  <strong>Categoria:</strong> {pieces[selectedPieceIndex].categoria?.charAt(0).toUpperCase() + pieces[selectedPieceIndex].categoria?.slice(1) || 'Não especificada'}
+                </p>
                 <p className='description'>{pieces[selectedPieceIndex].description || 'Sem descricao cadastrada.'}</p>
 
                 <h4>Medidas por tamanho</h4>
@@ -285,22 +338,30 @@ export default function AdminPage() {
                     <div key={i} className='details-size-card'>
                       <strong>{size.label}</strong>
                       <dl>
-                        <div>
-                          <dt>Busto</dt>
-                          <dd>{size.measurements.bust || '-'} cm</dd>
-                        </div>
-                        <div>
-                          <dt>Cintura</dt>
-                          <dd>{size.measurements.waist || '-'} cm</dd>
-                        </div>
-                        <div>
-                          <dt>Quadril</dt>
-                          <dd>{size.measurements.hips || '-'} cm</dd>
-                        </div>
-                        <div>
-                          <dt>Comprimento</dt>
-                          <dd>{size.measurements.length || '-'} cm</dd>
-                        </div>
+                        {size.measurements.bust && (
+                          <div>
+                            <dt>Busto</dt>
+                            <dd>{size.measurements.bust} cm</dd>
+                          </div>
+                        )}
+                        {size.measurements.waist && (
+                          <div>
+                            <dt>Cintura</dt>
+                            <dd>{size.measurements.waist} cm</dd>
+                          </div>
+                        )}
+                        {size.measurements.hips && (
+                          <div>
+                            <dt>Quadril</dt>
+                            <dd>{size.measurements.hips} cm</dd>
+                          </div>
+                        )}
+                        {size.measurements.length && (
+                          <div>
+                            <dt>Comprimento</dt>
+                            <dd>{size.measurements.length} cm</dd>
+                          </div>
+                        )}
                       </dl>
                     </div>
                   ))}

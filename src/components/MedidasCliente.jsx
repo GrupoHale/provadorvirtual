@@ -1,8 +1,22 @@
 import { useState } from 'react';
 import guiaMedidas from '../../public/_comoMedirCrop2.jpg';
-export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCintura, quadril, setQuadril }) {
+
+const CATEGORIAS_MEDIDAS = {
+  blusa: ['busto', 'cintura', 'quadril'],
+  camisa: ['busto', 'cintura', 'quadril'],
+  calça: ['cintura', 'quadril', 'comprimento'],
+  vestido: ['busto', 'cintura', 'quadril', 'comprimento'],
+  saia: ['cintura', 'quadril', 'comprimento']
+}
+
+function getMedidasCategoria(categoria) {
+  return CATEGORIAS_MEDIDAS[categoria?.toLowerCase()] || []
+}
+
+export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCintura, quadril, setQuadril, roupaSelecionada }) {
 
     const [checked, setChecked] = useState(false);
+    const medidasRelevantes = getMedidasCategoria(roupaSelecionada?.categoria)
     
     return (
         <div className='card card-step'>
@@ -10,27 +24,33 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
                 <div className='card-copy'>
                     <p className='subtitle'>Passo 3</p>
                     <h2>Conte-nos suas medidas</h2>
-                    <p className='description'>Preencha busto, cintura e quadril para gerar o mannequin correto.</p>
+                    <p className='description'>Preencha as medidas para {roupaSelecionada?.nome || 'a peça'} para gerar o mannequin correto.</p>
 
                     <div className="form-row-medidas">
                         <input id="isMedidas" type="checkbox" onChange={(e) => setChecked(e.target.checked)} />
                         <label htmlFor="isMedidas">Não sei minhas medidas</label>
                     </div>
 
-                    <div className='form-row' style={{display: checked ? "none" : "block"}} >
-                        <label htmlFor='busto'>Busto</label>
-                        <input type='number' id='busto' min='25' max='120' placeholder='cm' value={busto} onChange={(e) => setBusto(Number(e.target.value))} />
-                    </div>
+                    {medidasRelevantes.includes('busto') && (
+                      <div className='form-row' style={{display: checked ? "none" : "block"}} >
+                          <label htmlFor='busto'>Busto</label>
+                          <input type='number' id='busto' min='25' max='120' placeholder='cm' value={busto} onChange={(e) => setBusto(Number(e.target.value))} />
+                      </div>
+                    )}
                     
-                    <div className='form-row' style={{display: checked ? "none" : "block"}}>
-                        <label htmlFor='cintura'>Cintura</label>
-                        <input type='number' id='cintura' min='30' max='120' placeholder='cm' value={cintura} onChange={(e) => setCintura(Number(e.target.value))} />
-                    </div>
+                    {medidasRelevantes.includes('cintura') && (
+                      <div className='form-row' style={{display: checked ? "none" : "block"}}>
+                          <label htmlFor='cintura'>Cintura</label>
+                          <input type='number' id='cintura' min='30' max='120' placeholder='cm' value={cintura} onChange={(e) => setCintura(Number(e.target.value))} />
+                      </div>
+                    )}
 
-                    <div className='form-row' style={{display: checked ? "none" : "block"}}>
-                        <label htmlFor='quadril'>Quadril</label>
-                        <input type='number' id='quadril' min='0' max='120' placeholder='cm' value={quadril} onChange={(e) => setQuadril(Number(e.target.value))} />
-                    </div>
+                    {medidasRelevantes.includes('quadril') && (
+                      <div className='form-row' style={{display: checked ? "none" : "block"}}>
+                          <label htmlFor='quadril'>Quadril</label>
+                          <input type='number' id='quadril' min='0' max='120' placeholder='cm' value={quadril} onChange={(e) => setQuadril(Number(e.target.value))} />
+                      </div>
+                    )}
                 </div>
 
                 <div className='card-visual'>

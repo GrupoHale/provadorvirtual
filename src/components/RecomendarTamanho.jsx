@@ -1,14 +1,27 @@
 import { useEffect, useMemo, useState } from 'react';
 
+const CATEGORIAS_MEDIDAS = {
+  blusa: ['busto', 'cintura', 'quadril'],
+  camisa: ['busto', 'cintura', 'quadril'],
+  calça: ['cintura', 'quadril', 'comprimento'],
+  vestido: ['busto', 'cintura', 'quadril', 'comprimento'],
+  saia: ['cintura', 'quadril', 'comprimento']
+}
+
 const CAMPOS_MEDIDAS = [
   { key: 'busto', label: 'Busto', posicao: 'busto' },
   { key: 'cintura', label: 'Cintura', posicao: 'cintura' },
-  { key: 'quadril', label: 'Quadril', posicao: 'quadril' }
+  { key: 'quadril', label: 'Quadril', posicao: 'quadril' },
+  { key: 'comprimento', label: 'Comprimento', posicao: 'comprimento' }
 ];
 
 function medidaNumero(valor) {
   const numero = Number(valor);
   return Number.isFinite(numero) ? numero : null;
+}
+
+function getMedidasCategoria(categoria) {
+  return CATEGORIAS_MEDIDAS[categoria?.toLowerCase()] || CATEGORIAS_MEDIDAS.blusa
 }
 
 function normalizarTamanho(tamanho) {
@@ -39,8 +52,11 @@ function textoAjuste(status) {
   return 'Sem medida';
 }
 
-function pontuarTamanho(tamanho, medidasCliente) {
-  return CAMPOS_MEDIDAS.reduce((score, campo) => {
+function pontuarTamanho(tamanho, medidasCliente, categoria) {
+  const medidasRelevantes = getMedidasCategoria(categoria)
+  const camposFiltrados = CAMPOS_MEDIDAS.filter(campo => medidasRelevantes.includes(campo.key))
+  
+  return camposFiltrados.reduce((score, campo) => {
     const medidaCliente = medidasCliente[campo.key];
     const medidaRoupa = tamanho[campo.key];
 
@@ -75,15 +91,17 @@ export default function RecomendarTamanho({
   const [medidasEditadas, setMedidasEditadas] = useState({
     busto: busto ?? '',
     cintura: cintura ?? '',
-    quadril: quadril ?? ''
+    quadril: quadril ?? '',
+    comprimento: ''
   });
 
   const mannequinSrc = `/mannequin_formatos/${formatoCorpo || '030303'}.jpg`;
   const medidasCliente = useMemo(() => ({
     busto: medidaNumero(busto),
     cintura: medidaNumero(cintura),
-    quadril: medidaNumero(quadril)
-  }), [busto, cintura, quadril]);
+    quadril: medidaNumero(quadril),
+    comprimento: medidaNumero(medidasEditadas.comprimento)
+  }), [busto, cintura, quadril, medidasEditadas.comprimento]);
 
   const tamanhosRoupa = useMemo(() => {
     const tamanhos = roupaSelecionada?.tamanhos ?? roupaSelecionada?.sizes ?? [];
@@ -94,9 +112,9 @@ export default function RecomendarTamanho({
     if (tamanhosRoupa.length === 0) return null;
 
     return tamanhosRoupa.reduce((melhor, tamanho) => (
-      pontuarTamanho(tamanho, medidasCliente) < pontuarTamanho(melhor, medidasCliente) ? tamanho : melhor
+      pontuarTamanho(tamanho, medidasCliente, roupaSelecionada?.categoria) < pontuarTamanho(melhor, medidasCliente, roupaSelecionada?.categoria) ? tamanho : melhor
     ), tamanhosRoupa[0]);
-  }, [tamanhosRoupa, medidasCliente]);
+  }, [tamanhosRoupa, medidasCliente, roupaSelecionada?.categoria]);
 
   useEffect(() => {
     if (!tamanhoIdeal?.label) return;
@@ -107,10 +125,13 @@ export default function RecomendarTamanho({
 
   const tamanhoAtual = tamanhosRoupa.find((tamanho) => tamanho.label === tamanhoSelecionado) ?? tamanhoIdeal;
   const tamanhosMais = tamanhosRoupa.filter((tamanho) => tamanho.label !== tamanhoSelecionado);
-  const ajustes = CAMPOS_MEDIDAS.map((campo) => ({
-    ...campo,
-    status: classificarAjuste(medidasCliente[campo.key], tamanhoAtual?.[campo.key])
-  }));
+  const medidasRelevantes = getMedidasCategoria(roupaSelecionada?.categoria)
+  const ajustes = CAMPOS_MEDIDAS
+    .filter((campo) => medidasRelevantes.includes(campo.key))
+    .map((campo) => ({
+      ...campo,
+      status: classificarAjuste(medidasCliente[campo.key], tamanhoAtual?.[campo.key])
+    }));
 
   const handleSizeChange = (novo) => {
     setTamanhoSelecionado(novo);
@@ -121,7 +142,8 @@ export default function RecomendarTamanho({
     setMedidasEditadas({
       busto: busto ?? '',
       cintura: cintura ?? '',
-      quadril: quadril ?? ''
+      quadril: quadril ?? '',
+      comprimento: medidasEditadas.comprimento ?? ''
     });
     setEditandoMedidas(true);
   };
@@ -150,23 +172,45 @@ export default function RecomendarTamanho({
             <h3>Editar medidas</h3>
 
             <div className="editar-medidas-form">
-              <label htmlFor="editar-busto">Busto</label>
-              <div className="editar-medida-input">
-                <input id="editar-busto" type="number" min="0" value={medidasEditadas.busto} onChange={(e) => handleMedidaChange('busto', e.target.value)} />
-                <span>cm</span>
-              </div>
+              {getMedidasCategoria(roupaSelecionada?.categoria).includes('busto') && (
+                <>
+                  <label htmlFor="editar-busto">Busto</label>
+                  <div className="editar-medida-input">
+                    <input id="editar-busto" type="number" min="0" value={medidasEditadas.busto} onChange={(e) => handleMedidaChange('busto', e.target.value)} />
+                    <span>cm</span>
+                  </div>
+                </>
+              )}
 
-              <label htmlFor="editar-cintura">Cintura</label>
-              <div className="editar-medida-input">
-                <input id="editar-cintura" type="number" min="0" value={medidasEditadas.cintura} onChange={(e) => handleMedidaChange('cintura', e.target.value)} />
-                <span>cm</span>
-              </div>
+              {getMedidasCategoria(roupaSelecionada?.categoria).includes('cintura') && (
+                <>
+                  <label htmlFor="editar-cintura">Cintura</label>
+                  <div className="editar-medida-input">
+                    <input id="editar-cintura" type="number" min="0" value={medidasEditadas.cintura} onChange={(e) => handleMedidaChange('cintura', e.target.value)} />
+                    <span>cm</span>
+                  </div>
+                </>
+              )}
 
-              <label htmlFor="editar-quadril">Quadril</label>
-              <div className="editar-medida-input">
-                <input id="editar-quadril" type="number" min="0" value={medidasEditadas.quadril} onChange={(e) => handleMedidaChange('quadril', e.target.value)} />
-                <span>cm</span>
-              </div>
+              {getMedidasCategoria(roupaSelecionada?.categoria).includes('quadril') && (
+                <>
+                  <label htmlFor="editar-quadril">Quadril</label>
+                  <div className="editar-medida-input">
+                    <input id="editar-quadril" type="number" min="0" value={medidasEditadas.quadril} onChange={(e) => handleMedidaChange('quadril', e.target.value)} />
+                    <span>cm</span>
+                  </div>
+                </>
+              )}
+
+              {getMedidasCategoria(roupaSelecionada?.categoria).includes('comprimento') && (
+                <>
+                  <label htmlFor="editar-comprimento">Comprimento</label>
+                  <div className="editar-medida-input">
+                    <input id="editar-comprimento" type="number" min="0" value={medidasEditadas.comprimento} onChange={(e) => handleMedidaChange('comprimento', e.target.value)} />
+                    <span>cm</span>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="editar-medidas-actions">
@@ -187,18 +231,30 @@ export default function RecomendarTamanho({
                   <span className="medida-label">Peso</span>
                   <span className="medida-valor">{peso} kg</span>
                 </div>
-                <div className="medida-item">
-                  <span className="medida-label">Busto</span>
-                  <span className="medida-valor">{busto} cm</span>
-                </div>
-                <div className="medida-item">
-                  <span className="medida-label">Cintura</span>
-                  <span className="medida-valor">{cintura} cm</span>
-                </div>
-                <div className="medida-item">
-                  <span className="medida-label">Quadril</span>
-                  <span className="medida-valor">{quadril} cm</span>
-                </div>
+                {getMedidasCategoria(roupaSelecionada?.categoria).includes('busto') && (
+                  <div className="medida-item">
+                    <span className="medida-label">Busto</span>
+                    <span className="medida-valor">{busto} cm</span>
+                  </div>
+                )}
+                {getMedidasCategoria(roupaSelecionada?.categoria).includes('cintura') && (
+                  <div className="medida-item">
+                    <span className="medida-label">Cintura</span>
+                    <span className="medida-valor">{cintura} cm</span>
+                  </div>
+                )}
+                {getMedidasCategoria(roupaSelecionada?.categoria).includes('quadril') && (
+                  <div className="medida-item">
+                    <span className="medida-label">Quadril</span>
+                    <span className="medida-valor">{quadril} cm</span>
+                  </div>
+                )}
+                {getMedidasCategoria(roupaSelecionada?.categoria).includes('comprimento') && (
+                  <div className="medida-item">
+                    <span className="medida-label">Comprimento</span>
+                    <span className="medida-valor">{medidasEditadas.comprimento} cm</span>
+                  </div>
+                )}
                   <button className="btn-editar" onClick={abrirEdicaoMedidas} type="button">Editar medidas</button>
               </div>
             </div>
