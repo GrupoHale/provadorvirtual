@@ -10,7 +10,8 @@ const CATEGORIAS_MEDIDAS = {
 }
 
 function getMedidasCategoria(categoria) {
-  return CATEGORIAS_MEDIDAS[categoria?.toLowerCase()] || []
+  const categoriaLimpa = (categoria ?? '').toString().trim().toLowerCase()
+  return CATEGORIAS_MEDIDAS[categoriaLimpa] || CATEGORIAS_MEDIDAS.blusa
 }
 
 export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCintura, quadril, setQuadril, roupaSelecionada }) {
@@ -32,23 +33,23 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
                     </div>
 
                     {medidasRelevantes.includes('busto') && (
-                      <div className='form-row' style={{display: checked ? "none" : "block"}} >
+                      <div className='form-row' style={{display: checked ? 'none' : 'grid'}} >
                           <label htmlFor='busto'>Busto</label>
-                          <input type='number' id='busto' min='25' max='120' placeholder='cm' value={busto} onChange={(e) => setBusto(Number(e.target.value))} />
+                          <input type='number' id='busto' min='25' max='120' placeholder='cm' value={busto ?? ''} onChange={(e) => setBusto(e.target.value === '' ? '' : Number(e.target.value))} />
                       </div>
                     )}
                     
                     {medidasRelevantes.includes('cintura') && (
-                      <div className='form-row' style={{display: checked ? "none" : "block"}}>
+                      <div className='form-row' style={{display: checked ? 'none' : 'grid'}}>
                           <label htmlFor='cintura'>Cintura</label>
-                          <input type='number' id='cintura' min='30' max='120' placeholder='cm' value={cintura} onChange={(e) => setCintura(Number(e.target.value))} />
+                          <input type='number' id='cintura' min='30' max='120' placeholder='cm' value={cintura ?? ''} onChange={(e) => setCintura(e.target.value === '' ? '' : Number(e.target.value))} />
                       </div>
                     )}
 
                     {medidasRelevantes.includes('quadril') && (
-                      <div className='form-row' style={{display: checked ? "none" : "block"}}>
+                      <div className='form-row' style={{display: checked ? 'none' : 'grid'}}>
                           <label htmlFor='quadril'>Quadril</label>
-                          <input type='number' id='quadril' min='0' max='120' placeholder='cm' value={quadril} onChange={(e) => setQuadril(Number(e.target.value))} />
+                          <input type='number' id='quadril' min='0' max='120' placeholder='cm' value={quadril ?? ''} onChange={(e) => setQuadril(e.target.value === '' ? '' : Number(e.target.value))} />
                       </div>
                     )}
                 </div>
