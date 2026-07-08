@@ -12,7 +12,7 @@ const CATEGORIAS = [
 const initialForm = { categoria: 'blusa', name: '', description: '', sizes: [], image: '' }
 
 export default function AdminPage() {
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(true)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [adminView, setAdminView] = useState('create')
@@ -161,8 +161,6 @@ export default function AdminPage() {
             <p className='subtitle'>Área do Administrador</p>
           </div>
           <div className='admin-actions'>
-            <button className='btn-voltar' onClick={() => setLoggedIn(false)}>Logout</button>
-            <button className='btn-voltar' onClick={() => (location.hash = '')}>Ir para site</button>
           </div>
         </div>
 
@@ -198,16 +196,16 @@ export default function AdminPage() {
               </div>
               <div className='form-row'>
                 <label>Nome</label>
-                <input name='name' value={form.name} onChange={handleChange} />
+                <input name='name' value={form.name} onChange={handleChange} required/>
               </div>
               <div className='form-row'>
                 <label>Descrição</label>
-                <input name='description' value={form.description} onChange={handleChange} />
+                <input name='description' value={form.description} onChange={handleChange} required/>
               </div>
 
               <div className='form-row'>
                 <label>Imagem</label>
-                <input type='file' accept='image/*' onChange={handleImageChange} />
+                <input type='file' accept='image/*' onChange={handleImageChange} required/>
                 {form.image && (
                   <div className='admin-image-preview'>
                     <img src={form.image} alt='Preview da peca' />
@@ -324,7 +322,7 @@ export default function AdminPage() {
                   <div className='piece-details-placeholder'>Sem imagem</div>
                 )}
               </div>
-
+              
               <div className='piece-details-info'>
                 <h3>{pieces[selectedPieceIndex].name}</h3>
                 <p className='description' style={{ marginBottom: 12 }}>
