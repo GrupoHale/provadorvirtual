@@ -65,7 +65,7 @@ export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada,
           <label htmlFor='pesquisa'>Pesquisar</label>
           <input 
             id='pesquisa'
-            type='text' 
+            type='text'
             placeholder='Digite o nome da roupa' 
             value={pesquisa} 
             onChange={(e) => setPesquisa(e.target.value)}

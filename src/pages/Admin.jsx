@@ -299,7 +299,7 @@ export default function AdminPage() {
                     </div>
                     <div className='piece-actions'>
                       <button type='button' className='btn-editar' onClick={() => showPieceDetails(idx)}>Visualizar detalhes</button>
-                      <button type='button' className='btn-editar' onClick={() => removePiece(idx)}>Excluir</button>
+                      <button type='button' className='btn-excluir' onClick={() => removePiece(idx)}>Excluir</button>
                     </div>
                   </div>
                 </div>

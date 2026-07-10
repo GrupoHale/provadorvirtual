@@ -2,7 +2,11 @@
   --background: #f5f7fb;
   --surface: #ffffff;
   --surface-strong: #eef2f7;
+  --surface-red: rgb(255, 65, 65);
+  --btn-red: #fd5757d7;
   --text: #23272f;
+  --text-white: white;
+  --text-black: black;
   --muted: #6b7280;
   --border: #d7dde6;
   --accent: #968869;
@@ -471,6 +475,10 @@ input::-webkit-inner-spin-button {
   display: grid;
   gap: 12px;
   margin-top: 12px;
+  max-height: 500px;
+  box-sizing: border-box;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .piece-card {
@@ -895,10 +903,23 @@ input::-webkit-inner-spin-button {
   transition: all 0.2s ease;
   font-size: 13px;
   width: 100%;
+} & .btn-excluir {
+  background: var(--btn-red);
+  color: var(--text-white);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 13px;
 }
 
 .btn-editar:hover {
   background: var(--border);
+} & .btn-excluir:hover {
+  background: var(--surface-red);
+  color: var(--text-white);
 }
 
 .editar-medidas-content {

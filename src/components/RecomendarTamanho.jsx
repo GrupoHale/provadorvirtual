@@ -249,12 +249,12 @@ export default function RecomendarTamanho({
                     <span className="medida-valor">{quadril} cm</span>
                   </div>
                 )}
-                {getMedidasCategoria(roupaSelecionada?.categoria).includes('comprimento') && (
+                {/*getMedidasCategoria(roupaSelecionada?.categoria).includes('comprimento') && (
                   <div className="medida-item">
                     <span className="medida-label">Comprimento</span>
                     <span className="medida-valor">{medidasEditadas.comprimento} cm</span>
                   </div>
-                )}
+                )*/}
                   <button className="btn-editar" onClick={abrirEdicaoMedidas} type="button">Editar medidas</button>
               </div>
             </div>
