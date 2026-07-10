@@ -198,10 +198,10 @@ export default function AdminPage() {
                 <label>Nome</label>
                 <input name='name' value={form.name} onChange={handleChange} required/>
               </div>
-              <div className='form-row'>
+              {/* <div className='form-row'>
                 <label>Descrição</label>
                 <input name='description' value={form.description} onChange={handleChange} required/>
-              </div>
+              </div>*/}
 
               <div className='form-row'>
                 <label>Imagem</label>
@@ -292,7 +292,7 @@ export default function AdminPage() {
                         <div key={i} className='size-badge'>
                           <div style={{ fontWeight: 700 }}>{size.label}</div>
                           <div style={{ fontSize: 12, color: 'var(--muted)' }}>
-                            {size.measurements.bust} / {size.measurements.waist} / {size.measurements.hips} cm
+                            {`Busto: ${size.measurements.bust}cm`} / {`Cintura: ${size.measurements.waist}cm`} / {`Quadril: ${size.measurements.hips}cm`} / {size.measurements.length && `Comprimento: ${size.measurements.length}cm`}
                           </div>
                         </div>
                       ))}

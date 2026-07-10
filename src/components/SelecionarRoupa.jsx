@@ -66,7 +66,7 @@ export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada,
           <input 
             id='pesquisa'
             type='text' 
-            placeholder='Digite o nome da peça...' 
+            placeholder='Digite o nome da roupa' 
             value={pesquisa} 
             onChange={(e) => setPesquisa(e.target.value)}
           />
@@ -120,7 +120,6 @@ export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada,
                       {roupa.categoria.charAt(0).toUpperCase() + roupa.categoria.slice(1)}
                     </span>
                   )}
-                  {roupa.descricao && <span>{roupa.descricao}</span>}
                 </span>
               </button>
             )

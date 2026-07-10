@@ -269,7 +269,8 @@ input::-webkit-inner-spin-button {
 
 .roupas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  flex-direction: row;
+  grid-template-columns: repeat(auto-fit, 180px);
   gap: 15px;
   align-items: stretch;
   width: 100%;
@@ -310,7 +311,7 @@ input::-webkit-inner-spin-button {
 }
 
 .roupa-image-wrap img {
-  width: 90%;
+  width: 500px;
   height: 100%;
   object-fit: cover;
 }
