@@ -566,7 +566,8 @@ export default function AdminPage() {
                   border: '1px solid #ddd',
                   borderRadius: '6px',
                   cursor: 'pointer',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  color: '#000000'
                 }}
               >
                 Cancelar
