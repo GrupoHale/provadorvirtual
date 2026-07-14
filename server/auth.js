@@ -22,7 +22,19 @@ export async function createAdmin(username, password) {
 
 export async function validateAdmin(username, password) {
   const result = await query('SELECT id, username, password_hash FROM admins WHERE username = $1', [username]);
-  const admin = result.rows[0];
+  let admin = result.rows[0];
+
+  if (!admin) {
+    const defaultUsername = process.env.ADMIN_USERNAME || 'admin';
+    const defaultPassword = process.env.ADMIN_PASSWORD || 'admin123';
+
+    if (username === defaultUsername && password === defaultPassword) {
+      await createAdmin(defaultUsername, defaultPassword);
+      const retry = await query('SELECT id, username, password_hash FROM admins WHERE username = $1', [defaultUsername]);
+      admin = retry.rows[0];
+    }
+  }
+
   if (!admin) return null;
 
   const isValid = bcrypt.compareSync(password, admin.password_hash);

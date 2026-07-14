@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+const API_BASE_URL = (import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:3001/api'))
 
 const CATEGORIAS = [
   { id: 1, nome: "blusa", medidas: ["busto", "cintura", "quadril"] },
