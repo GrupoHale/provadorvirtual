@@ -1,8 +1,17 @@
 import { Pool } from 'pg';
 
+if (!process.env.DATABASE_URL) {
+  console.error('ERROR: DATABASE_URL is not defined');
+  process.exit(1);
+}
+
+const isNeon = process.env.DATABASE_URL.includes('neon.tech');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  ssl: isNeon ? { rejectUnauthorized: false } : false,
+  connectionTimeoutMillis: 10000,
+  idleTimeoutMillis: 30000,
+  max: 20
 });
 
 export async function query(text, params) {

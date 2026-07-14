@@ -30,6 +30,8 @@ export default function AdminPage() {
     }
   })
   const [form, setForm] = useState(initialForm)
+  const [isLoading, setIsLoading] = useState(false)
+  const [deleteConfirm, setDeleteConfirm] = useState(null)
 
   async function handleLogin(e) {
     e.preventDefault()
@@ -102,6 +104,7 @@ export default function AdminPage() {
 
     try {
       if (piece.id) {
+        setIsLoading(true)
         const response = await fetch(`${API_BASE_URL}/roupas/${piece.id}`, {
           method: 'DELETE',
           headers: {
@@ -119,9 +122,12 @@ export default function AdminPage() {
         setSelectedPieceIndex(null)
         setAdminView('list')
       }
+      setDeleteConfirm(null)
     } catch (error) {
       console.error(error)
       alert(error.message || 'Não foi possível remover a peça')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -148,6 +154,7 @@ export default function AdminPage() {
     }
 
     try {
+      setIsLoading(true)
       const response = await fetch(`${API_BASE_URL}/roupas`, {
         method: 'POST',
         headers: {
@@ -175,6 +182,8 @@ export default function AdminPage() {
     } catch (error) {
       console.error(error)
       alert(error.message || 'Não foi possível salvar a peça')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -374,7 +383,9 @@ export default function AdminPage() {
               </div>
 
               <div className='card-footer' style={{ marginTop: 18 }}>
-                <button className='btn-primary' type='submit'>Salvar</button>
+                <button className='btn-primary' type='submit' disabled={isLoading}>
+                  {isLoading ? 'Salvando...' : 'Salvar'}
+                </button>
               </div>
             </form>
           </div>
@@ -406,7 +417,7 @@ export default function AdminPage() {
                     </div>
                     <div className='piece-actions'>
                       <button type='button' className='btn-editar' onClick={() => showPieceDetails(idx)}>Visualizar detalhes</button>
-                      <button type='button' className='btn-excluir' onClick={() => removePiece(idx)}>Excluir</button>
+                      <button type='button' className='btn-excluir' onClick={() => setDeleteConfirm(idx)}>Excluir</button>
                     </div>
                   </div>
                 </div>
@@ -476,6 +487,109 @@ export default function AdminPage() {
           </div>
         )}
       </div>
+
+      {isLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '40px',
+            borderRadius: '12px',
+            textAlign: 'center',
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)'
+          }}>
+            <div style={{
+              width: '50px',
+              height: '50px',
+              border: '4px solid #f0f0f0',
+              borderTop: '4px solid #333',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+              margin: '0 auto 20px'
+            }}></div>
+            <p style={{ margin: 0, fontSize: '16px', color: '#333' }}>Carregando...</p>
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        </div>
+      )}
+
+      {deleteConfirm !== null && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1001
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            padding: '30px',
+            borderRadius: '12px',
+            maxWidth: '400px',
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)'
+          }}>
+            <h3 style={{ margin: '0 0 10px', color: '#333' }}>Confirmar Exclusão</h3>
+            <p style={{ margin: '0 0 20px', color: '#666' }}>
+              Tem certeza que deseja excluir <strong>{pieces[deleteConfirm]?.name}</strong>? Esta ação não pode ser desfeita.
+            </p>
+            <div style={{
+              display: 'flex',
+              gap: '10px',
+              justifyContent: 'flex-end'
+            }}>
+              <button
+                type='button'
+                onClick={() => setDeleteConfirm(null)}
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#f0f0f0',
+                  border: '1px solid #ddd',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                type='button'
+                onClick={() => removePiece(deleteConfirm)}
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#b91c1c',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

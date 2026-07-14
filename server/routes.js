@@ -7,23 +7,32 @@ const router = express.Router();
 
 router.get('/health', async (_req, res) => {
   try {
+    if (!process.env.DATABASE_URL) {
+      return res.status(500).json({ error: 'DATABASE_URL não definida' });
+    }
     await initSchema();
-    res.json({ ok: true });
+    res.json({ ok: true, hasDatabase: !!process.env.DATABASE_URL });
   } catch (error) {
+    console.error('Health check error:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
 router.post('/admin/login', async (req, res) => {
   try {
+    await initSchema();
     const { username, password } = req.body || {};
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username e password são obrigatórios' });
+    }
     const auth = await validateAdmin(username, password);
     if (!auth) {
       return res.status(401).json({ error: 'Credenciais inválidas' });
     }
     res.json(auth);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Login error:', error);
+    res.status(500).json({ error: error.message || 'Erro ao autenticar' });
   }
 });
 
