@@ -410,7 +410,7 @@ export default function AdminPage() {
                         <div key={i} className='size-badge'>
                           <div style={{ fontWeight: 700 }}>{size.label}</div>
                           <div style={{ fontSize: 12, color: 'var(--muted)' }}>
-                            {`Busto: ${size.measurements.bust}cm`} / {`Cintura: ${size.measurements.waist}cm`} / {`Quadril: ${size.measurements.hips}cm`} / {size.measurements.length && `Comprimento: ${size.measurements.length}cm`}
+                            {size.measurements.bust && `Busto: ${size.measurements.bust}cm`} / {size.measurements.waist && `Cintura: ${size.measurements.waist}cm`} / {size.measurements.hips && `Quadril: ${size.measurements.hips}cm`} / {size.measurements.length && `Comprimento: ${size.measurements.length}cm`}
                           </div>
                         </div>
                       ))}
