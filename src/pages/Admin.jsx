@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:3001/api'))
+const API_BASE_URL = (import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:3001/api')).replace(/\/$/, '')
 
 const CATEGORIAS = [
   { id: 1, nome: "blusa", medidas: ["busto", "cintura", "quadril"] },
@@ -47,14 +47,20 @@ export default function AdminPage() {
         body: JSON.stringify({ username, password })
       })
 
+      const data = await response.json().catch(() => ({}))
+
       if (!response.ok) {
-        throw new Error('Falha ao autenticar')
+        throw new Error(data?.error || 'Falha ao autenticar')
       }
 
-      const data = await response.json()
+      if (!data?.token) {
+        throw new Error('Resposta inválida da API')
+      }
+
       localStorage.setItem('adminToken', data.token)
       setLoggedIn(true)
     } catch (error) {
+      console.error('Login admin error:', error)
       setAuthError(error.message || 'Erro ao autenticar')
     }
   }

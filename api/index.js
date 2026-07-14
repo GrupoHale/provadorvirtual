@@ -5,8 +5,9 @@ import routes from '../server/routes.js';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '10mb' }));
+app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', routes);
 
 export default app;
