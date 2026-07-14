@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+
 const CATEGORIAS = [
   { id: 1, nome: "blusa", medidas: ["busto", "cintura", "quadril"] },
   { id: 2, nome: "camisa", medidas: ["busto", "cintura", "quadril"] },
@@ -12,9 +14,10 @@ const CATEGORIAS = [
 const initialForm = { categoria: 'blusa', name: '', description: '', sizes: [], image: '' }
 
 export default function AdminPage() {
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(() => Boolean(localStorage.getItem('adminToken')))
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [authError, setAuthError] = useState('')
   const [adminView, setAdminView] = useState('create')
   const [selectedPieceIndex, setSelectedPieceIndex] = useState(null)
 
@@ -28,10 +31,31 @@ export default function AdminPage() {
   })
   const [form, setForm] = useState(initialForm)
 
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault()
-    if (username.trim() && password.trim()) {
+    setAuthError('')
+
+    if (!username.trim() || !password.trim()) {
+      setAuthError('Preencha usuário e senha')
+      return
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
+
+      if (!response.ok) {
+        throw new Error('Falha ao autenticar')
+      }
+
+      const data = await response.json()
+      localStorage.setItem('adminToken', data.token)
       setLoggedIn(true)
+    } catch (error) {
+      setAuthError(error.message || 'Erro ao autenticar')
     }
   }
 
@@ -66,11 +90,32 @@ export default function AdminPage() {
     setForm(prev => ({ ...prev, sizes: prev.sizes.filter((_, i) => i !== index) }))
   }
 
-  function removePiece(index) {
-    setPieces(prev => prev.filter((_, i) => i !== index))
-    if (selectedPieceIndex === index) {
-      setSelectedPieceIndex(null)
-      setAdminView('list')
+  async function removePiece(index) {
+    const piece = pieces[index]
+    if (!piece) return
+
+    try {
+      if (piece.id) {
+        const response = await fetch(`${API_BASE_URL}/roupas/${piece.id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('adminToken') || ''}`
+          }
+        })
+
+        if (!response.ok) {
+          throw new Error('Falha ao remover a peça')
+        }
+      }
+
+      setPieces(prev => prev.filter((_, i) => i !== index))
+      if (selectedPieceIndex === index) {
+        setSelectedPieceIndex(null)
+        setAdminView('list')
+      }
+    } catch (error) {
+      console.error(error)
+      alert(error.message || 'Não foi possível remover a peça')
     }
   }
 
@@ -84,15 +129,47 @@ export default function AdminPage() {
     setForm(prev => ({ ...prev, [name]: value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     if (!form.name.trim()) {
       alert('Por favor, preencha o nome da peça')
       return
     }
-    setPieces(prev => [...prev, form])
-    setForm(initialForm)
-    setAdminView('list')
+
+    const payload = {
+      ...form,
+      description: form.description || ''
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/roupas`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('adminToken') || ''}`
+        },
+        body: JSON.stringify(payload)
+      })
+
+      if (!response.ok) {
+        throw new Error('Falha ao salvar no banco')
+      }
+
+      const savedPiece = await response.json()
+      setPieces(prev => [{
+        ...savedPiece,
+        id: savedPiece.id,
+        name: savedPiece.nome,
+        description: savedPiece.descricao,
+        image: savedPiece.imagem,
+        sizes: savedPiece.tamanhos || []
+      }, ...prev])
+      setForm(initialForm)
+      setAdminView('list')
+    } catch (error) {
+      console.error(error)
+      alert(error.message || 'Não foi possível salvar a peça')
+    }
   }
 
   function handleImageChange(e) {
@@ -118,6 +195,29 @@ export default function AdminPage() {
     }
   }, [pieces])
 
+  useEffect(() => {
+    async function loadPieces() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/roupas`)
+        if (!response.ok) return
+        const data = await response.json()
+        if (Array.isArray(data)) {
+          setPieces(data.map(piece => ({
+            ...piece,
+            name: piece.nome,
+            description: piece.descricao,
+            image: piece.imagem,
+            sizes: piece.tamanhos || []
+          })))
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    loadPieces()
+  }, [])
+
 
 
 
@@ -141,6 +241,7 @@ export default function AdminPage() {
               <label>Senha</label>
               <input type='password' value={password} onChange={e => setPassword(e.target.value)} />
             </div>
+            {authError && <p className='description' style={{ color: '#b91c1c' }}>{authError}</p>}
             <div className='card-footer'>
               <button className='btn-primary' type='submit'>Entrar</button>
             </div>

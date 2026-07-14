@@ -23,7 +23,7 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
         <div className='card card-step'>
             <div className='card-content'>
                 <div className='card-copy'>
-                    <p className='subtitle'>Passo 3</p>
+                    <p className='subtitle'>Passo 2</p>
                     <h2>Conte-nos suas medidas</h2>
                     <p className='description'>Preencha as medidas para {roupaSelecionada?.nome || 'a peça'} para gerar o mannequin correto.</p>
 
@@ -53,7 +53,6 @@ export default function MedidasCliente({ onNext, busto, setBusto, cintura, setCi
                       </div>
                     )}
                 </div>
-
                 <div className='card-visual'>
                     <img src={guiaMedidas} alt='' />
                 </div>

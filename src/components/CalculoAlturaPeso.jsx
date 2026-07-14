@@ -8,9 +8,9 @@ export default function CalculoAlturaPeso({ onNext, altura, setAltura, peso, set
     <div className='card card-step'>
       <div className='card-content'>
         <div className='card-copy'>
-          <p className='subtitle'>Passo 2</p>
+          <p className='subtitle'>Passo 1</p>
           <h2>Informe suas medidas antropométricas</h2>
-          <p className='description'>Preencha altura, peso e idade.</p>
+          <p className='description'>Preencha com sua altura, peso e idade.</p>
 
           <div className='form-row'>
             <label htmlFor='altura'>Altura</label>

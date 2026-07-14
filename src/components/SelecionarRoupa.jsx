@@ -56,7 +56,7 @@ export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada,
   return (
     <div className='card card-step'>
       <div className='card-copy selecionar-roupa-header'>
-        <p className='subtitle'>Passo 1</p>
+        <h2 className="subtitle">VITRINE</h2>
         <h2>Escolha a roupa que deseja provar</h2>
       </div>
 
