@@ -10,8 +10,9 @@ function normalizarProduto(produto, index) {
 }
 
 const CATEGORIAS = ['blusa', 'camisa', 'calça', 'vestido', 'saia']
+const API_BASE_URL = (import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:3001/api')).replace(/\/$/, '')
 
-function carregarRoupas() {
+function carregarRoupasLocais() {
   try {
     const raw = localStorage.getItem('pieces')
     const roupasAdmin = raw ? JSON.parse(raw) : []
@@ -26,13 +27,64 @@ function carregarRoupas() {
   return []
 }
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada, onNext }) {
-  const roupas = carregarRoupas()
+  const [roupas, setRoupas] = useState(() => carregarRoupasLocais())
+  const [carregando, setCarregando] = useState(true)
   const roupaAtual = roupaSelecionada ?? roupas[0]
   const [pesquisa, setPesquisa] = useState('')
   const [categoriaFiltro, setCategoriaFiltro] = useState('')
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function carregarRoupas() {
+      setCarregando(true)
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/roupas`)
+        if (!response.ok) {
+          throw new Error('Falha ao carregar roupas')
+        }
+
+        const data = await response.json()
+        if (!Array.isArray(data)) {
+          throw new Error('Resposta inválida do servidor')
+        }
+
+        const roupasApi = data.map(normalizarProduto)
+
+        if (isMounted) {
+          setRoupas(roupasApi)
+          try {
+            localStorage.setItem('pieces', JSON.stringify(roupasApi))
+          } catch {
+            // Ignora falhas de armazenamento local.
+          }
+        }
+      } catch (error) {
+        console.error(error)
+
+        if (isMounted) {
+          const roupasLocais = carregarRoupasLocais()
+          if (roupasLocais.length > 0) {
+            setRoupas(roupasLocais)
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setCarregando(false)
+        }
+      }
+    }
+
+    carregarRoupas()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const roupasFiltradas = roupas.filter(roupa => {
     const pesquisaBaixa = pesquisa.toLowerCase()
@@ -88,7 +140,11 @@ export default function SelecionarRoupa({ roupaSelecionada, setRoupaSelecionada,
         </div>
       </div>
 
-      {roupasFiltradas.length === 0 ? (
+      {carregando && roupas.length === 0 ? (
+        <div className='empty-state'>
+          <h3>Carregando peças...</h3>
+        </div>
+      ) : roupasFiltradas.length === 0 ? (
         <div className='empty-state'>
           <h3>{roupas.length === 0 ? 'Nenhuma peça cadastrada' : 'Nenhuma peça encontrada'}</h3>
         </div>
