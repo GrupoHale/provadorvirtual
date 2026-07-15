@@ -41,9 +41,230 @@ input {
 }
 
 .app {
-  width: min(1200px, calc(100% - 40px));
+  width: min(1200px, calc(100% - 24px));
   margin: 0 auto;
-  padding: 32px 0 48px;
+  padding: 24px 0 40px;
+}
+
+html, body, #root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.page-content {
+  display: grid;
+  gap: 20px;
+}
+
+.card-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.card-step {
+  padding: 24px;
+  min-height: auto;
+}
+
+.roupas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.boneco {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 24px;
+  align-items: start;
+  padding: 24px;
+  min-height: auto;
+}
+
+.card-footer-mannequin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  padding-top: 0;
+  width: 100%;
+}
+
+@media (max-width: 920px) {
+  .app {
+    width: min(100%, calc(100% - 20px));
+    padding: 20px 0 32px;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .card-content,
+  .boneco {
+    grid-template-columns: 1fr;
+  }
+
+  .card-step {
+    padding: 20px;
+  }
+
+  .boneco {
+    padding: 20px;
+  }
+
+  .card-visual {
+    min-height: 220px;
+  }
+
+  .boneco img {
+    max-height: 380px;
+  }
+
+  .card-footer {
+    justify-content: stretch;
+  }
+
+  .card-footer .btn-primary,
+  .card-footer .btn-voltar {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    width: min(100%, calc(100% - 16px));
+    padding: 16px 0 24px;
+  }
+
+  .app-header h1 {
+    font-size: clamp(22px, 3vw, 30px);
+  }
+
+  .page-content {
+    gap: 16px;
+  }
+
+  .card-copy h2 {
+    font-size: clamp(20px, 2.5vw, 26px);
+  }
+
+  .form-row input,
+  .form-row select,
+  .btn-primary,
+  .btn-voltar,
+  .btn-proximo {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .roupas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .roupa-card {
+    min-height: auto;
+  }
+
+  .boneco img {
+    max-height: 320px;
+  }
+
+  .card-footer-mannequin {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .app {
+    width: min(100%, calc(100% - 12px));
+    padding: 12px 0 20px;
+  }
+
+  .app-header {
+    margin-bottom: 16px;
+  }
+
+  .app-header .eyebrow {
+    font-size: 11px;
+  }
+
+  .app-header h1 {
+    font-size: clamp(18px, 3.2vw, 22px);
+  }
+
+  .page-content {
+    gap: 12px;
+  }
+
+  .card-step,
+  .boneco {
+    padding: 12px;
+  }
+
+  .card-copy .description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .form-row {
+    margin-bottom: 12px;
+  }
+
+  .form-row label {
+    font-size: 14px;
+  }
+
+  .form-row input,
+  .form-row select,
+  .btn-primary,
+  .btn-voltar,
+  .btn-proximo {
+    min-height: 42px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .roupas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .roupa-card {
+    min-height: 220px;
+  }
+
+  .roupa-info strong {
+    font-size: 14px;
+  }
+
+  .boneco img {
+    max-height: 260px;
+  }
+
+  .formMedidas h2 {
+    font-size: 18px;
+  }
+
+  .formMedidas h3 {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .btn-primary,
+  .btn-voltar,
+  .btn-proximo {
+    width: 100%;
+  }
 }
 
 .app-header {
@@ -1010,7 +1231,7 @@ input::-webkit-inner-spin-button {
 
 .editar-medidas-form {
   display: grid;
-  grid-template-columns: 92px 1fr;
+  grid-template-columns: 90px 1fr;
   gap: 12px 14px;
   align-items: center;
 }

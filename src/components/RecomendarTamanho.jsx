@@ -291,7 +291,8 @@ export default function RecomendarTamanho({
                     className={`btn-tamanho ${tamanho.label === tamanhoSelecionado ? 'ativo' : ''}`}
                     onClick={() => handleSizeChange(tamanho.label)}
                   >
-                    {tamanho.label}
+                    {tamanho.label.toUpperCase()
+                    }
                   </button>
                 ))}
                 <div className="container-modal-recomedadacao-tamanho">
@@ -299,7 +300,7 @@ export default function RecomendarTamanho({
 
                   <div className="modal-recomendacao-tamanho2">
                     <div className="modal-recomendacao-tamanho">
-                      <h1>{tamanhoSelecionado}</h1>
+                      <h1>{tamanhoSelecionado.toUpperCase()}</h1>
                     </div>
                   </div>
 

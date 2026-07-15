@@ -23,11 +23,11 @@ router.post('/admin/login', async (req, res) => {
     await initSchema();
     const { username, password } = req.body || {};
     if (!username || !password) {
-      return res.status(400).json({ error: 'Username e password são obrigatórios' });
+      return res.status(400).json({ error: 'Usuário e Senha são obrigatórios' });
     }
     const auth = await validateAdmin(username, password);
     if (!auth) {
-      return res.status(401).json({ error: 'Credenciais inválidas' });
+      return res.status(401).json({ error: 'Usuário ou Senha inválidas' });
     }
     res.json(auth);
   } catch (error) {
@@ -40,7 +40,7 @@ router.post('/admin/create', async (req, res) => {
   try {
     const { username, password } = req.body || {};
     if (!username || !password) {
-      return res.status(400).json({ error: 'Informe username e password' });
+      return res.status(400).json({ error: 'Informe o usuário e senha' });
     }
     const admin = await createAdmin(username, password);
     res.status(201).json(admin);
