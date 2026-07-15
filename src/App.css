@@ -2061,3 +2061,27 @@ input::-webkit-inner-spin-button {
   background: var(--surface-strong);
   color: var(--text);
 }
+
+::file-selector-button {
+    margin-right: 15px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #000000;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+::file-selector-button:hover {
+    margin-right: 15px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #0f172a;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}

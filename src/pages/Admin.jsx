@@ -446,7 +446,6 @@ export default function AdminPage() {
                 <p className='description' style={{ marginBottom: 12 }}>
                   <strong>Categoria:</strong> {pieces[selectedPieceIndex].categoria?.charAt(0).toUpperCase() + pieces[selectedPieceIndex].categoria?.slice(1) || 'Não especificada'}
                 </p>
-                <p className='description'>{pieces[selectedPieceIndex].description || 'Sem descricao cadastrada.'}</p>
 
                 <h4>Medidas por tamanho</h4>
                 <div className='details-sizes-grid'>
