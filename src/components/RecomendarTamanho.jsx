@@ -220,7 +220,7 @@ export default function RecomendarTamanho({
           </div>
         ) : (
           <div className="recomendacao-content">
-            <div className="recomendacao-medidas">
+            <section className="recomendacao-medidas">
               <h3>Medidas corporais</h3>
               <div className="medidas-info">
                 <div className="medida-item">
@@ -249,17 +249,11 @@ export default function RecomendarTamanho({
                     <span className="medida-valor">{quadril} cm</span>
                   </div>
                 )}
-                {/*getMedidasCategoria(roupaSelecionada?.categoria).includes('comprimento') && (
-                  <div className="medida-item">
-                    <span className="medida-label">Comprimento</span>
-                    <span className="medida-valor">{medidasEditadas.comprimento} cm</span>
-                  </div>
-                )*/}
-                  <button className="btn-editar" onClick={abrirEdicaoMedidas} type="button">Editar medidas</button>
+                <button className="btn-editar" onClick={abrirEdicaoMedidas} type="button">Editar medidas</button>
               </div>
-            </div>
+            </section>
 
-            <div className="recomendacao-centro">
+            <section className="recomendacao-centro">
               <div className="recomendacao-mannequin">
                 <div className="mannequin-placeholder">
                   <img src={mannequinSrc} alt={`Mannequin ${formatoCorpo || '030303'}`} />
@@ -279,10 +273,10 @@ export default function RecomendarTamanho({
                   ))}
                 </div>
               </div>
-            </div>
+            </section>
 
-            <div className="recomendacao-tamanhos">
-              <p className="tamanhos-titulo">Prove tambem os tamanhos:</p>
+            <section className="recomendacao-tamanhos">
+              <p className="tamanhos-titulo">Prove também os tamanhos:</p>
 
               <div className="tamanhos-grid">
                 {tamanhosMais.map((tamanho) => (
@@ -291,27 +285,27 @@ export default function RecomendarTamanho({
                     className={`btn-tamanho ${tamanho.label === tamanhoSelecionado ? 'ativo' : ''}`}
                     onClick={() => handleSizeChange(tamanho.label)}
                   >
-                    {tamanho.label.toUpperCase()
-                    }
+                    {tamanho.label.toUpperCase()}
                   </button>
                 ))}
-                <div className="container-modal-recomedadacao-tamanho">
-                  <h3>{tamanhoSelecionado === tamanhoIdeal?.label ? 'Tamanho recomendado:' : 'Tamanho selecionado:'}</h3>
+              </div>
 
-                  <div className="modal-recomendacao-tamanho2">
-                    <div className="modal-recomendacao-tamanho">
-                      <h1>{tamanhoSelecionado.toUpperCase()}</h1>
-                    </div>
+              <div className="container-modal-recomedadacao-tamanho">
+                <h3>{tamanhoSelecionado === tamanhoIdeal?.label ? 'Tamanho recomendado:' : 'Tamanho selecionado:'}</h3>
+
+                <div className="modal-recomendacao-tamanho2">
+                  <div className="modal-recomendacao-tamanho">
+                    <h1>{tamanhoSelecionado.toUpperCase()}</h1>
                   </div>
-
-                  {tamanhoSelecionado !== tamanhoIdeal?.label && (
-                    <p className="tamanho-ideal-info">Ideal: {tamanhoIdeal?.label}</p>
-                  )}
                 </div>
+
+                {tamanhoSelecionado !== tamanhoIdeal?.label && (
+                  <p className="tamanho-ideal-info">Ideal: {tamanhoIdeal?.label}</p>
+                )}
               </div>
 
               <button className="btn-fechar-principal" onClick={onClose}>FECHAR</button>
-            </div>
+            </section>
           </div>
         )}
       </div>

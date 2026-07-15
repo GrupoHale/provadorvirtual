@@ -1389,78 +1389,56 @@ input::-webkit-inner-spin-button {
 
   .recomendacao-content {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
   }
 
   .recomendacao-medidas {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
     min-width: unset;
     padding: 16px;
     background: var(--surface-strong);
     border-radius: 12px;
   }
 
-  .recomendacao-medidas h3 {
-    grid-column: 1 / -1;
-    margin-bottom: 0;
+  .medidas-info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 
-  .medida-item {
-    text-align: center;
+  .btn-editar {
+    grid-column: 1 / -1;
   }
 
   .recomendacao-centro {
-    order: -1;
+    order: 2;
   }
 
   .recomendacao-tamanhos {
     min-width: unset;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .tamanhos-titulo {
-    order: -1;
-    width: 100%;
-    text-align: center;
+    gap: 12px;
   }
 
   .tamanhos-grid {
-    order: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+    gap: 8px;
     min-height: auto;
-    flex-direction: row;
-    align-content: center;
-    width: 100%;
   }
 
   .btn-fechar-principal {
-    order: 3;
     width: 100%;
   }
 }
 
-/* Tablet grande */
 @media (max-width: 768px) {
   .modal-recomendacao {
-    margin: 16px;
+    margin: 12px;
+    max-height: 95vh;
   }
 
   .recomendacao-content {
     padding: 20px;
     gap: 16px;
-  }
-
-  .recomendacao-medidas {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .recomendacao-medidas h3 {
-    font-size: 12px;
   }
 
   .medida-label {
@@ -1471,19 +1449,12 @@ input::-webkit-inner-spin-button {
     font-size: 14px;
   }
 
-  .tamanho-badge {
-    width: 70px;
-    height: 70px;
-    font-size: 28px;
-  }
-
   .recomendacao-mannequin {
-    max-width: 180px;
+    max-width: 260px;
   }
 
   .btn-tamanho {
-    width: 44px;
-    height: 44px;
+    min-height: 44px;
     font-size: 13px;
   }
 
@@ -1494,34 +1465,39 @@ input::-webkit-inner-spin-button {
   }
 }
 
-/* Mobile grande (480px - 768px) */
 @media (max-width: 480px) {
   .modal-recomendacao-overlay {
-    padding: 12px;
+    padding: 8px;
+    align-items: flex-start;
+    overflow-y: auto;
   }
 
   .modal-recomendacao {
-    max-height: 95vh;
+    max-height: none;
+    max-width: 100%;
+    margin: 0;
   }
 
   .recomendacao-content {
     display: flex;
     flex-direction: column;
     padding: 16px;
-    gap: 16px;
+    gap: 14px;
   }
 
   .recomendacao-medidas {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
     padding: 12px;
     order: 1;
   }
 
   .recomendacao-medidas h3 {
-    grid-column: 1 / -1;
-    margin-bottom: 0;
     font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .medidas-info {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
   .medida-item {
@@ -1536,39 +1512,32 @@ input::-webkit-inner-spin-button {
     font-size: 12px;
   }
 
-  .recomendacao-titulo {
-    font-size: 11px;
-    margin-top: 8px;
-  }
-
-  .tamanho-badge {
-    width: 64px;
-    height: 64px;
-    font-size: 24px;
-  }
-
   .recomendacao-centro {
     order: 2;
-    gap: 16px;
+    gap: 12px;
   }
 
   .recomendacao-mannequin {
-    max-width: 160px;
+    max-width: none;
+    width: 100%;
     gap: 12px;
   }
 
   .mannequin-placeholder {
-    max-width: 160px;
+    max-width: none;
+    min-height: 240px;
+  }
+
+  .ajuste-indicators {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
   }
 
   .ajuste-item {
-    padding: 6px 10px;
+    padding: 8px 10px;
     font-size: 12px;
-  }
-
-  .ajuste-item svg {
-    width: 18px;
-    height: 18px;
+    gap: 10px;
   }
 
   .btn-editar {
@@ -1592,8 +1561,7 @@ input::-webkit-inner-spin-button {
 
   .recomendacao-tamanhos {
     order: 3;
-    flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     min-width: unset;
   }
 
@@ -1605,18 +1573,28 @@ input::-webkit-inner-spin-button {
   }
 
   .tamanhos-grid {
-    min-height: auto;
-    flex-direction: row;
-    align-content: center;
-    width: 100%;
-    gap: 6px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .btn-tamanho {
-    width: 40px;
-    height: 40px;
+    width: 100%;
+    min-height: 44px;
     font-size: 12px;
-    flex: 1;
+  }
+
+  .container-modal-recomedadacao-tamanho {
+    width: 100%;
+  }
+
+  .modal-recomendacao-tamanho {
+    width: 100%;
+    max-width: 180px;
+    min-height: 70px;
+  }
+
+  .modal-recomendacao-tamanho h1 {
+    font-size: 24px;
   }
 
   .btn-fechar-principal {
