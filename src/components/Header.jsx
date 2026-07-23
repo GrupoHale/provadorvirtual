@@ -2,16 +2,15 @@ import logo from '../assets/logo.png'
 import '../Header.css'
 
 export default function Header() {
-    const handleGoHome = (event) => {
-        event.preventDefault()
-        window.location.hash = ''
-        window.dispatchEvent(new Event('reset-app'))
+    const handleGoHome = () => {
         window.location.assign('/')
     }
 
     return (
         <div className='header'>
-            <img className='logo' src={logo} alt="logo" onClick={handleGoHome} style={{ cursor: 'pointer' }} />
+            <button type='button' className='logo-button' onClick={handleGoHome} aria-label='Voltar para a página inicial'>
+                <img className='logo' src={logo} alt='Provador Virtual' />
+            </button>
             <button onClick={() => (window.location.hash = '#/admin')}>Admin</button>
         </div>
     )

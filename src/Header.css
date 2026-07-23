@@ -9,7 +9,20 @@
     flex-wrap: wrap;
 }
 
-.header img {
+.header .logo-button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.header .logo-button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.header .logo {
     width: clamp(44px, 8vw, 58px);
     height: auto;
     flex-shrink: 0;
