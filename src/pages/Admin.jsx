@@ -4,14 +4,16 @@ import '../App.css'
 const API_BASE_URL = (import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:3001/api')).replace(/\/$/, '')
 
 const CATEGORIAS = [
-  { id: 1, nome: "blusa", medidas: ["busto", "cintura", "quadril"] },
-  { id: 2, nome: "camisa", medidas: ["busto", "cintura", "quadril"] },
-  { id: 3, nome: "calça", medidas: ["cintura", "quadril", "comprimento"] },
-  { id: 4, nome: "vestido", medidas: ["busto", "cintura", "quadril", "comprimento"] },
-  { id: 5, nome: "saia", medidas: ["cintura", "quadril", "comprimento"] }
+  { id: 1, nome: "Blusa", medidas: ["busto", "cintura", "quadril"] },
+  { id: 2, nome: "Body", medidas: ["busto", "cintura"]},
+  { id: 3, nome: "Calça", medidas: ["cintura", "quadril", "comprimento"]},
+  { id: 4, nome: "Vestido", medidas: ["busto", "cintura", "quadril", "comprimento"]},
+  { id: 6, nome: "Cropped", medidas: ["busto", "cintura"]},
+  { id: 7, nome: "Short", medidas: ["cintura", "quadril", "comprimento"]},
+  { id: 8, nome: "Saia", medidas: ["cintura", "quadril", "comprimento"]}
 ]
 
-const initialForm = { categoria: 'blusa', name: '', description: '', sizes: [], image: '' }
+const initialForm = { categoria: 'Blusa', name: '', description: '', sizes: [], image: '' }
 
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(() => Boolean(localStorage.getItem('adminToken')))

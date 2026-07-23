@@ -9,7 +9,7 @@ function normalizarProduto(produto, index) {
   }
 }
 
-const CATEGORIAS = ['blusa', 'camisa', 'calça', 'vestido', 'saia']
+const CATEGORIAS = ['blusa', 'body', 'calça', 'vestido', 'saia', 'short', 'cropped',  ]
 const API_BASE_URL = (import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api` : 'http://localhost:3001/api')).replace(/\/$/, '')
 
 function carregarRoupasLocais() {
@@ -18,7 +18,7 @@ function carregarRoupasLocais() {
     const roupasAdmin = raw ? JSON.parse(raw) : []
 
     if (Array.isArray(roupasAdmin) && roupasAdmin.length > 0) {
-      return roupasAdmin.map(normalizarProduto)
+      return roupasAmin.map(normalizarProduto)
     }
   } catch {
     // Sem roupas quando o armazenamento local nao puder ser lido.
