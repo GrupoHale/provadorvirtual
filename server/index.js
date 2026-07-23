@@ -7,10 +7,10 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(cors({ origin: true, credentials: true }));
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '2mb' }));
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.use('/api', routes);
 
 app.listen(port, () => {
-  console.log(`API ready on http://localhost:${port}`);
+  console.log(`API rodando no http://localhost:${port}`);
 });

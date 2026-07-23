@@ -73,6 +73,26 @@ router.post('/roupas', async (req, res) => {
   }
 });
 
+router.put('/roupas/:id', async (req, res) => {
+  try {
+    await initSchema();
+    const payload = mapFormToPiece(req.body);
+    const result = await query(
+      `UPDATE roupas
+       SET nome = $1, categoria = $2, descricao = $3, imagem = $4, tamanhos = $5
+       WHERE id = $6
+       RETURNING *`,
+      [payload.nome, payload.categoria, payload.descricao, payload.imagem, JSON.stringify(payload.tamanhos), req.params.id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Roupa não encontrada' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.delete('/roupas/:id', async (req, res) => {
   try {
     await initSchema();

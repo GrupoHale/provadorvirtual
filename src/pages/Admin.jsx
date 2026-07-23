@@ -20,6 +20,7 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState('')
   const [adminView, setAdminView] = useState('create')
   const [selectedPieceIndex, setSelectedPieceIndex] = useState(null)
+  const [editingPieceIndex, setEditingPieceIndex] = useState(null)
 
   const [pieces, setPieces] = useState(() => {
     try {
@@ -136,6 +137,30 @@ export default function AdminPage() {
     setAdminView('details')
   }
 
+  function startEditingPiece(index) {
+    const piece = pieces[index]
+    if (!piece) return
+
+    setForm({
+      categoria: piece.categoria || 'blusa',
+      name: piece.name || '',
+      description: piece.description || '',
+      image: piece.image || '',
+      sizes: (piece.sizes || []).map(size => ({
+        ...size,
+        measurements: { ...(size.measurements || {}) }
+      }))
+    })
+    setEditingPieceIndex(index)
+    setAdminView('create')
+  }
+
+  function openCreateForm() {
+    setForm(initialForm)
+    setEditingPieceIndex(null)
+    setAdminView('create')
+  }
+
   function handleChange(e) {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
@@ -155,29 +180,38 @@ export default function AdminPage() {
 
     try {
       setIsLoading(true)
-      const response = await fetch(`${API_BASE_URL}/roupas`, {
-        method: 'POST',
+      const editingPiece = editingPieceIndex !== null ? pieces[editingPieceIndex] : null
+      const response = await fetch(
+        editingPiece?.id ? `${API_BASE_URL}/roupas/${editingPiece.id}` : `${API_BASE_URL}/roupas`,
+        {
+        method: editingPiece?.id ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('adminToken') || ''}`
         },
         body: JSON.stringify(payload)
-      })
+        }
+      )
 
       if (!response.ok) {
         throw new Error('Falha ao salvar no banco')
       }
 
       const savedPiece = await response.json()
-      setPieces(prev => [{
+      const normalizedPiece = {
         ...savedPiece,
         id: savedPiece.id,
         name: savedPiece.nome,
         description: savedPiece.descricao,
         image: savedPiece.imagem,
         sizes: savedPiece.tamanhos || []
-      }, ...prev])
+      }
+      setPieces(prev => editingPieceIndex !== null
+        ? prev.map((piece, index) => index === editingPieceIndex ? normalizedPiece : piece)
+        : [normalizedPiece, ...prev]
+      )
       setForm(initialForm)
+      setEditingPieceIndex(null)
       setAdminView('list')
     } catch (error) {
       console.error(error)
@@ -284,7 +318,7 @@ export default function AdminPage() {
           <button
             type='button'
             className={`btn-editar ${adminView === 'create' ? 'ativo' : ''}`}
-            onClick={() => setAdminView('create')}
+            onClick={openCreateForm}
           >
             Cadastrar peça
           </button>
@@ -300,6 +334,7 @@ export default function AdminPage() {
         {adminView === 'create' && (
           <div className='admin-form admin-screen'>
             <form onSubmit={handleSubmit}>
+            <h3 style={{ marginTop: 0 }}>{editingPieceIndex !== null ? 'Editar peça' : 'Cadastrar peça'}</h3>
             <div className='form-row'>
                 <label>Selecione a categoria</label>
                 <select name='categoria' value={form.categoria} onChange={handleChange}>
@@ -321,7 +356,7 @@ export default function AdminPage() {
 
               <div className='form-row'>
                 <label>Imagem</label>
-                <input type='file' accept='image/*' onChange={handleImageChange} required/>
+                <input type='file' accept='image/*' onChange={handleImageChange} required={!form.image}/>
                 {form.image && (
                   <div className='admin-image-preview'>
                     <img src={form.image} alt='Preview da peca' />
@@ -384,7 +419,7 @@ export default function AdminPage() {
 
               <div className='card-footer' style={{ marginTop: 18 }}>
                 <button className='btn-primary' type='submit' disabled={isLoading}>
-                  {isLoading ? 'Salvando...' : 'Salvar'}
+                  {isLoading ? 'Salvando...' : editingPieceIndex !== null ? 'Salvar alterações' : 'Salvar'}
                 </button>
               </div>
             </form>
@@ -417,6 +452,7 @@ export default function AdminPage() {
                     </div>
                     <div className='piece-actions'>
                       <button type='button' className='btn-editar' onClick={() => showPieceDetails(idx)}>Visualizar detalhes</button>
+                      <button type='button' className='btn-editar' onClick={() => startEditingPiece(idx)}>Editar</button>
                       <button type='button' className='btn-excluir' onClick={() => setDeleteConfirm(idx)}>Excluir</button>
                     </div>
                   </div>
